@@ -7,7 +7,6 @@ function Header() {
                     <li><a href="/">Home</a></li>
                     <li><a href="/AI">AI</a></li>
                     <li><a href="/Bill Of Rights">Bill Of Rights</a></li>
-                    <li><a href="/Frequently Asked Questions">Frequently Asked Questions</a></li>
                 </ul>
             </nav>
         </header>

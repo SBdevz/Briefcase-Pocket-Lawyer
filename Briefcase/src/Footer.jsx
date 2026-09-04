@@ -1,4 +1,4 @@
-function footer () {
+function Footer () {
     return (
         <footer className="footer">
             <ul>
