@@ -5,6 +5,8 @@ function Header() {
             <nav>
                 <ul>
                     <li><a href="/">Home</a></li>
+                    <li><a href="/AI">AI</a></li>
+                    <li><a href="/Bill Of Rights">Bill Of Rights</a></li>
                 </ul>
             </nav>
         </header>
