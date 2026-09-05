@@ -1,3 +1,5 @@
+import About from './About.jsx';
+
 function Footer () {
     return (
         <footer className="footer">
