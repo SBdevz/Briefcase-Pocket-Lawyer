@@ -1,11 +1,13 @@
+import About from './About.jsx';
+
 function Footer () {
     return (
         <footer className="footer">
             <ul>
-                <li><a href="About.jsx">About</a></li>
-                <li><a href="Contact.jsx">Contact</a></li>
-                <li><a href="Privacy Policy.jsx">Privacy Policy</a></li>
-                <li><a href="Terms of Service.jsx">Terms of Service</a></li>
+                <li><link to="/About">About</link></li>
+                <li><link to="/Contact">Contact</link></li>
+                <li><link to="/Privacy-Policy">Privacy Policy</link></li>
+                <li><link to="/Terms-of-Service">Terms of Service</link></li>
             </ul>
             <div className="container">
                 <p>&copy; Briefcase Pocket Lawyer. All rights reserved.</p>
