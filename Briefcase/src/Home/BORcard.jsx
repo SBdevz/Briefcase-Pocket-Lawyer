@@ -1,7 +1,10 @@
 
-function Card(){
+function BORcard(){
+    function handleClick() {
+        window.location.href = "/bill-of-rights";
+    }
     return(
-        <div className="card">
+        <div className="card" onClick={handleClick}>
             <img className="card-image" src="https://bri-wp-images.s3.amazonaws.com/wp-content/uploads/founding-fathers-550x271.png" alt="Bill of Rights" />
             <br></br>
             <br></br>
@@ -12,4 +15,4 @@ function Card(){
     )
 }
 
-export default Card
+export default BORcard
