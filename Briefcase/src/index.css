@@ -61,8 +61,7 @@ body {
   text-align: center;
   border-inline: 1px solid var(--border);
   min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+  display: black;
   box-sizing: border-box;
 }
 
@@ -117,7 +116,10 @@ code {
   margin: 10px;
   text-align: center;
   max-width: 310px;
+  min-height: 360px;
+  max-height: 360px;
   display: inline-block;
+  vertical-align: top;
 }
 
 .card-image {
