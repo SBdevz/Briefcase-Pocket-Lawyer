@@ -1,11 +1,11 @@
 function Header() {
     return(
-        <header>
+        <header className="header">
             <h1>Briefcase Pocket Lawyer</h1>
             <nav>
                 <ul>
                     <li>Home</li>
-                    <li>AI</li>
+                    <a href="/AI">AI</a>
                     <li>Sample 1</li>
                     <li>Sample 2</li>
                 </ul>
