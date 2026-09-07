@@ -4,7 +4,7 @@ function AIcard(){
         window.location.href = "/AI";
     }
     return(
-        <div className="card" onClick={handleClick}>
+        <div className="Card" onClick={handleClick}>
             <img className="card-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTho3dDm6bOx2nh0MM-S9kks2_NG4qUtl2lrrWwhWfyahstaZEjzrz7HKo&s=10" />
             <br></br>
             <br></br>

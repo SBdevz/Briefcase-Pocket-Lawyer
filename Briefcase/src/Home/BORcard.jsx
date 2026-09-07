@@ -4,7 +4,7 @@ function BORcard(){
         window.location.href = "/bill-of-rights";
     }
     return(
-        <div className="card" onClick={handleClick}>
+        <div className="Card" onClick={handleClick}>
             <img className="card-image" src="https://bri-wp-images.s3.amazonaws.com/wp-content/uploads/founding-fathers-550x271.png" alt="Bill of Rights" />
             <br></br>
             <br></br>

@@ -109,7 +109,7 @@ code {
   background: var(--code-bg);
 }
 
-.card{
+.Card{
   border: 1px solid rgba(247, 247, 247, 0.1);
   border-radius: 10px;
   padding: 20px;
