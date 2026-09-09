@@ -1,7 +1,7 @@
 import Footer from './Home/Footer.jsx';
 import Header from './Home/Header.jsx';
 import BORcard from './Home/BORcard.jsx';
-import AIcard from './Home/Aicard.jsx';
+import AIcard from './Home/AIcard.jsx';
 
 function App() {
     return(
