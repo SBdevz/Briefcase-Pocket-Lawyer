@@ -127,3 +127,47 @@ code {
   height: auto;
   border-radius: 10px;
 }
+
+.AccordianWrapper {
+  .AccordianWrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  padding-top: 10px;
+}
+}
+
+.accordian {
+  width: 500px;
+}
+
+.AccordianItem {
+  border: 1px solid rgba(247, 247, 247, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px;
+  text-align: left;
+  min-width: 500px;
+  max-height: 360px;
+  display: inline-block;
+  vertical-align: top;
+  
+}
+
+.AccordianHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.AccordianContent {
+  display: block;
+  margin-top: 10px;
+}
+
+.AccordianContent-hidden {
+  display: none;
+}
+
