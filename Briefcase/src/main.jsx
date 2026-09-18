@@ -6,13 +6,14 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import About from './About/About.jsx'
 import BillOfRights from './Bill-Of-Rights/bill-of-rights.jsx'
 import AI from './AI/AI.jsx'
+import ConstAmmend from './Constitutional Ammendments/ConstAmmend.jsx'
 
 const router = createBrowserRouter([
   {path: "/",element: <App />},
   {path: "/about",element: <About />},
   {path: "/bill-of-rights",element: <BillOfRights />},
-  {path: "/AI",element: <AI />}
-
+  {path: "/AI",element: <AI />},
+  {path: "/constitutional-amendments",element: <ConstAmmend />}
 ]);
 
 createRoot(document.getElementById('root')).render(
