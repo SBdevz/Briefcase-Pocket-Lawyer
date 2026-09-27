@@ -75,7 +75,7 @@ const data = [
     {
         Ammendment: "Twentieth Amendment",
         Summary: "Protects other rights retained by the people.",
-        Exact: "Stopped Here"
+        Exact: ""
     },
     {
         Ammendment: "Twenty-First Amendment",
