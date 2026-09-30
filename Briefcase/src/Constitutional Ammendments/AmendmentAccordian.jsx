@@ -75,42 +75,42 @@ const data = [
     {
         Ammendment: "Twentieth Amendment",
         Summary: "Protects other rights retained by the people.",
-        Exact: ""
+        Exact: "The terms of the President and Vice President shall end at noon on the 20th day of January, and the terms of Senators and Representatives at noon on the 3d day of January, of the years in which such terms would have ended if this article had not been ratified; and the terms of their successors shall then begin. The Congress shall assemble at least once in every year, and such meeting shall begin at noon on the 3d day of January, unless they shall by law appoint a different day. If, at the time fixed for the beginning of the term of the President, the President elect shall have died, the Vice President elect shall become President. If a President shall not have been chosen before the time fixed for the beginning of his term, or if the President elect shall have failed to qualify, then the Vice President elect shall act as President until a President shall have qualified; and the Congress may by law provide for the case wherein neither a President elect nor a Vice President elect shall have qualified, declaring who shall then act as President, or the manner in which one who is to act shall be selected, and such person shall act accordingly until a President or Vice President shall have qualified. The Congress may by law provide for the case of the death of any of the persons from whom the House of Representatives may choose a President whenever the right of choice shall have devolved upon them, and for the case of the death of any of the persons from whom the Senate may choose a Vice President whenever the right of choice shall have devolved upon them. Sections 1 and 2 shall take effect on the 15th day of October following the ratification of this article. This article shall be inoperative unless it shall have been ratified as an amendment to the Constitution by the legislatures of three-fourths of the several States within seven years from the date of its submission."
     },
     {
         Ammendment: "Twenty-First Amendment",
-        Summary: "Protects the rights reserved to the states or the people.",
-        Exact: "The powers not delegated to the United States by the Constitution, nor prohibited by it to the States, are reserved to the States respectively, or to the people."
+        Summary: "Ended Prohibition by repealing the Eighteenth Amendment and allowing states to regulate alcohol laws as they choose.",
+        Exact: "The eighteenth article of amendment to the Constitution of the United States is hereby repealed. The transportation or importation into any State, Territory, or possession of the United States for delivery or use therein of intoxicating liquors, in violation of the laws thereof, is hereby prohibited. This article shall be inoperative unless it shall have been ratified as an amendment to the Constitution by conventions in the several States, as provided in the Constitution, within seven years from the date of the submission hereof to the States by the Congress."
     },
     {
         Ammendment: "Twenty-Second Amendment",
-        Summary: "Protects the rights reserved to the states or the people.",
-        Exact: "The powers not delegated to the United States by the Constitution, nor prohibited by it to the States, are reserved to the States respectively, or to the people."
+        Summary: "Limits presidents to two elected terms and restricts how long someone can serve if they take over mid-term.",
+        Exact: "No person shall be elected to the office of the President more than twice, and no person who has held the office of President, or acted as President, for more than two years of a term to which some other person was elected President shall be elected to the office of the President more than once. But this Article shall not apply to any person holding the office of President when this Article was proposed by the Congress, and shall not prevent any person who may be holding the office of President, or acting as President, during the term within which this Article becomes operative from holding the office of President or acting as President during the remainder of such term. This article shall be inoperative unless it shall have been ratified as an amendment to the Constitution by the legislatures of three-fourths of the several States within seven years from the date of its submission to the States by the Congress."
     },
     {
         Ammendment: "Twenty-Third Amendment",
-        Summary: "Protects the rights reserved to the states or the people.",
-        Exact: "The powers not delegated to the United States by the Constitution, nor prohibited by it to the States, are reserved to the States respectively, or to the people."
+        Summary: "Gives residents of Washington, D.C., the right to vote in presidential elections by granting the district electoral votes.",
+        Exact: "No person shall be elected to the office of the President more than twice, and no person who has held the office of President, or acted as President, for more than two years of a term to which some other person was elected President shall be elected to the office of the President more than once. But this Article shall not apply to any person holding the office of President when this Article was proposed by the Congress, and shall not prevent any person who may be holding the office of President, or acting as President, during the term within which this Article becomes operative from holding the office of President or acting as President during the remainder of such term. This article shall be inoperative unless it shall have been ratified as an amendment to the Constitution by the legislatures of three-fourths of the several States within seven years from the date of its submission to the States by the Congress."
     },
     {
         Ammendment: "Twenty-Fourth Amendment",
-        Summary: "Protects the rights reserved to the states or the people.",
-        Exact: "The powers not delegated to the United States by the Constitution, nor prohibited by it to the States, are reserved to the States respectively, or to the people."
+        Summary: "Bans poll taxes in federal elections so citizens cannot be barred from voting because of a fee.",
+        Exact: "The right of citizens of the United States to vote in any primary or other election for President or Vice President, for electors for President or Vice President, or for Senator or Representative in Congress, shall not be denied or abridged by the United States or any State by reason of failure to pay any poll tax or other tax. The Congress shall have power to enforce this article by appropriate legislation."
     },
     {
         Ammendment: "Twenty-Fifth Amendment",
-        Summary: "Protects the rights reserved to the states or the people.",
-        Exact: "The powers not delegated to the United States by the Constitution, nor prohibited by it to the States, are reserved to the States respectively, or to the people."
+        Summary: "Defines presidential succession and the procedures for a president who is temporarily unable to perform duties.",
+        Exact: "In case of the removal of the President from office or of his death or resignation, the Vice President shall become President. Whenever there is a vacancy in the office of the Vice President, the President shall nominate a Vice President who shall take office upon confirmation by a majority vote of both Houses of Congress. Whenever the President transmits to the President pro tempore of the Senate and the Speaker of the House of Representatives his written declaration that he is unable to discharge the powers and duties of his office, and until he transmits to them a written declaration to the contrary, such powers and duties shall be discharged by the Vice President as Acting President. Whenever the Vice President and a majority of either the principal officers of the executive departments or of such other body as Congress may by law provide, transmit to the President pro tempore of the Senate and the Speaker of the House of Representatives their written declaration that the President is unable to discharge the powers and duties of his office, the Vice President shall immediately assume the powers and duties of the office as Acting President. Thereafter, when the President transmits to the President pro tempore of the Senate and the Speaker of the House of Representatives his written declaration that no inability exists, he shall resume the powers and duties of his office unless the Vice President and a majority of either the principal officers of the executive department or of such other body as Congress may by law provide, transmit within four days to the President pro tempore of the Senate and the Speaker of the House of Representatives their written declaration that the President is unable to discharge the powers and duties of his office. Thereupon Congress shall decide the issue, assembling within forty-eight hours for that purpose if not in session. If the Congress, within twenty-one days after receipt of the latter written declaration, or, if Congress is not in session, within twenty-one days after Congress is required to assemble, determines by two-thirds vote of both Houses that the President is unable to discharge the powers and duties of his office, the Vice President shall continue to discharge the same as Acting President; otherwise, the President shall resume the powers and duties of his office."
     },
     {
         Ammendment: "Twenty-Sixth Amendment",
-        Summary: "Protects the rights reserved to the states or the people.",
-        Exact: "The powers not delegated to the United States by the Constitution, nor prohibited by it to the States, are reserved to the States respectively, or to the people."
+        Summary: "Lowered the voting age to 18, guaranteeing that citizens older than 18 cannot be denied the vote based on age.",
+        Exact: "The right of citizens of the United States, who are eighteen years of age or older, to vote shall not be denied or abridged by the United States or by any State on account of age. The Congress shall have power to enforce this article by appropriate legislation."
     },
     {
         Ammendment: "Twenty-Seventh Amendment",
-        Summary: "Protects the rights reserved to the states or the people.",
-        Exact: "The powers not delegated to the United States by the Constitution, nor prohibited by it to the States, are reserved to the States respectively, or to the people."
+        Summary: "Prevents members of Congress from giving themselves an immediate pay raise by delaying changes in congressional compensation until after an election.",
+        Exact: "No law, varying the compensation for the services of the Senators and Representatives, shall take effect, until an election of Representatives shall have intervened."
     },
     
 ];
