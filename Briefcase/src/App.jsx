@@ -9,7 +9,7 @@ function App() {
     return(
         <>
             <Header />
-            <br></br>
+            <hr></hr>
             <Intro />
             <BORcard />
             <AIcard />
