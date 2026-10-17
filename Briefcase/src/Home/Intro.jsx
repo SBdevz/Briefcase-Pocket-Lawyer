@@ -12,7 +12,10 @@ function Intro() {
                     <p className="intro-lead">
                         Briefcase Pocket Lawyer brings useful U.S. legal resources and tools together in one straightforward place.
                     </p>
-                    <Link className="intro-cta" to="/Home">Explore the app <span aria-hidden="true">&rarr;</span></Link>
+                    <div className="intro-actions">
+                        <Link className="intro-cta" to="/demo">Preview as a guest <span aria-hidden="true">&rarr;</span></Link>
+                        <Link className="account-cta" to="/login">Log in or sign up</Link>
+                    </div>
                 </div>
                 <figure className="intro-visual">
                     <img

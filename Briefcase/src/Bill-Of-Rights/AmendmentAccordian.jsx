@@ -14,11 +14,17 @@ function AMaccordian(){
             <div className="Accordian">
                 {data.map((item, index) => (
                     <div key={index} className="AccordianItem">
-                        <div className="AccordianHeader" onClick={() => toggle(index)}>
+                        <button
+                            className="AccordianHeader"
+                            type="button"
+                            aria-expanded={selected === index}
+                            aria-controls={`bill-amendment-${index}`}
+                            onClick={() => toggle(index)}
+                        >
                             <h2>{item.Ammendment}</h2>
-                            <span>{selected === index ? '-' : '+'}</span>
-                        </div>
-                        <div className={selected === index ? 'AccordianContent' : 'AccordianContent-hidden'}>
+                            <span aria-hidden="true">{selected === index ? '-' : '+'}</span>
+                        </button>
+                        <div id={`bill-amendment-${index}`} className={selected === index ? 'AccordianContent' : 'AccordianContent-hidden'}>
                             <p>{item.Summary}</p>
                             <br />
                             <p>{item.Exact}</p>
@@ -75,7 +81,7 @@ const data = [
     {
         Ammendment: "Ninth Amendment",
         Summary: "Protects other rights retained by the people.",
-        Exact: "InThe enumeration in the Constitution, of certain rights, shall not be construed to deny or disparage others retained by the people.fo"
+        Exact: "The enumeration in the Constitution, of certain rights, shall not be construed to deny or disparage others retained by the people."
     },
     {
         Ammendment: "Tenth Amendment",

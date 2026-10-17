@@ -14,11 +14,17 @@ function AMaccordian(){
             <div className="Accordian">
                 {data.map((item, index) => (
                     <div key={index} className="AccordianItem">
-                        <div className="AccordianHeader" onClick={() => toggle(index)}>
+                        <button
+                            className="AccordianHeader"
+                            type="button"
+                            aria-expanded={selected === index}
+                            aria-controls={`constitutional-amendment-${index}`}
+                            onClick={() => toggle(index)}
+                        >
                             <h2>{item.Ammendment}</h2>
-                            <span>{selected === index ? '-' : '+'}</span>
-                        </div>
-                        <div className={selected === index ? 'AccordianContent' : 'AccordianContent-hidden'}>
+                            <span aria-hidden="true">{selected === index ? '-' : '+'}</span>
+                        </button>
+                        <div id={`constitutional-amendment-${index}`} className={selected === index ? 'AccordianContent' : 'AccordianContent-hidden'}>
                             <p>{item.Summary}</p>
                             <br />
                             <p>{item.Exact}</p>

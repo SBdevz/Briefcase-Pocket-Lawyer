@@ -1,0 +1,25 @@
+import { APIResource } from "../../../core/resource.js";
+import * as LiveAPI from "../live.js";
+export declare class Sideband extends APIResource {
+}
+/**
+ * Client events accepted by an attached Live sideband WebSocket. The session has
+ * already started. Send input audio over the primary connection.
+ */
+export type ConnectClientEvent = LiveAPI.SessionUpdateEvent | LiveAPI.InputAudioMuteEvent | LiveAPI.InputAudioUnmuteEvent | LiveAPI.OutputAudioFixturePlayEvent | LiveAPI.InstructionsAppendEvent | LiveAPI.ThinkingAppendEvent | LiveAPI.CommentaryAppendEvent | LiveAPI.DecisionCreateEvent | LiveAPI.DecisionItemCreateEvent | LiveAPI.DecisionItemDeleteEvent | LiveAPI.ResponseItemCreateEvent | LiveAPI.ResponseCreateEvent | LiveAPI.SessionCloseEvent;
+/**
+ * Server events received by an attached Live sideband WebSocket. Audio deltas are
+ * delivered over the primary connection.
+ */
+export type ConnectServerEvent = LiveAPI.SessionStartedEvent | LiveAPI.SessionUpdatedEvent | LiveAPI.InputAudioMutedEvent | LiveAPI.InputAudioUnmutedEvent | LiveAPI.OutputAudioFixturePlayingEvent | LiveAPI.OutputAudioFixturePlayedEvent | LiveAPI.InstructionsAppendedEvent | LiveAPI.ThinkingAppendedEvent | LiveAPI.CommentaryAppendedEvent | LiveAPI.InputTranscriptDeltaEvent | LiveAPI.OutputTranscriptDeltaEvent | LiveAPI.DelegationCreatedEvent | LiveAPI.DecisionEvent | LiveAPI.DecisionItemCreatedEvent | LiveAPI.DecisionItemDeletedEvent | LiveAPI.ResponseEvent | LiveAPI.SessionUsageUpdatedEvent | LiveAPI.SessionClosedEvent | LiveAPI.ErrorEvent | LiveAPI.InfoEvent;
+export interface SidebandConnectParams {
+    /**
+     * Opt in to the graceful WebSocket closing handshake when the session ends. The
+     * server may also enable this behavior by default.
+     */
+    graceful_close?: boolean;
+}
+export declare namespace Sideband {
+    export { type ConnectClientEvent as ConnectClientEvent, type ConnectServerEvent as ConnectServerEvent, type SidebandConnectParams as SidebandConnectParams, };
+}
+//# sourceMappingURL=sideband.d.ts.map
