@@ -4,6 +4,7 @@ import Header from './Home/Header.jsx';
 import BORcard from './Home/BORcard.jsx';
 import AIcard from './Home/AIcard.jsx';
 import ConstAmmend from './Home/ConstAmmendCard.jsx';
+import FooterHome from './Home/FooterHome.jsx';
 
 function App() {
     return (
@@ -54,7 +55,7 @@ function App() {
                     <Link to="/about">About Briefcase <span aria-hidden="true">&rarr;</span></Link>
                 </aside>
             </main>
-            <Footer />
+            <FooterHome />
         </div>
     );
 }
