@@ -1455,6 +1455,46 @@ code {
   overflow-wrap: anywhere;
 }
 
+.ai-markdown {
+  color: var(--ai-ink);
+  font-size: 14px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.ai-markdown > :first-child {
+  margin-top: 0;
+}
+
+.ai-markdown > :last-child {
+  margin-bottom: 0;
+}
+
+.ai-markdown p,
+.ai-markdown ul,
+.ai-markdown ol,
+.ai-markdown li,
+.ai-markdown blockquote,
+.ai-markdown pre,
+.ai-markdown code {
+  margin-top: 0;
+  margin-bottom: 0.7em;
+}
+
+.ai-markdown strong,
+.ai-markdown b {
+  font-weight: 700;
+}
+
+.ai-markdown ul,
+.ai-markdown ol {
+  padding-left: 1.25rem;
+}
+
+.ai-markdown a {
+  color: #c9b4ff;
+}
+
 .ai-typing p {
   color: var(--ai-muted);
   font-style: italic;

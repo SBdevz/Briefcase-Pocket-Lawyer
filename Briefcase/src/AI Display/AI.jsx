@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';
 
 const suggestedQuestions = [
@@ -104,7 +105,11 @@ function AI() {
               {messages.map((message, index) => (
                 <article className={`ai-message ai-message-${message.role}`} key={`${message.role}-${index}`}>
                   <span className="ai-message-label">{message.role === 'user' ? 'YOU' : 'BEN'}</span>
-                  <p>{message.content}</p>
+                  {message.role === 'assistant' ? (
+                    <div className="ai-markdown"><ReactMarkdown>{message.content}</ReactMarkdown></div>
+                  ) : (
+                    <p>{message.content}</p>
+                  )}
                 </article>
               ))}
               {isLoading && (
