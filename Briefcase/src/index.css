@@ -171,3 +171,169 @@ code {
   display: none;
 }
 
+.intro-page {
+  min-height: 100svh;
+  max-width: 1126px;
+  margin: 0 auto;
+  padding-bottom: 32px;
+}
+
+.intro-page .header {
+  padding: 8px 24px 20px;
+}
+
+.intro-page .header h1 {
+  margin: 24px 0 8px;
+}
+
+.intro-page .header h4 {
+  margin: 0;
+}
+
+.intro-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.7fr);
+  align-items: center;
+  gap: 32px;
+  padding: 32px clamp(24px, 6vw, 72px);
+  border-block: 1px solid var(--border);
+  text-align: left;
+}
+
+.intro-eyebrow {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.intro-copy h2,
+.intro-section-heading h2 {
+  margin: 0;
+  color: var(--text-h);
+  font-family: var(--heading);
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+.intro-lead {
+  max-width: 600px;
+  margin: 16px 0 22px;
+  font-size: 17px;
+}
+
+.intro-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: 4px;
+  color: #fff;
+  background: var(--accent);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 160ms ease;
+}
+
+.intro-cta:hover {
+  opacity: 0.85;
+}
+
+.intro-cta:focus-visible {
+  outline: 2px solid var(--text-h);
+  outline-offset: 3px;
+}
+
+.intro-visual {
+  margin: 0;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg);
+}
+
+.intro-visual img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.9;
+  object-fit: cover;
+}
+
+.intro-visual figcaption {
+  padding: 8px 2px 0;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.intro-features {
+  padding: 36px clamp(24px, 6vw, 72px);
+  text-align: center;
+}
+
+.intro-section-heading h2 {
+  font-size: 26px;
+}
+
+.intro-feature-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 36px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.intro-feature-list li {
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  font-size: 15px;
+}
+
+.intro-notes {
+  margin: 0 clamp(24px, 6vw, 72px);
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  text-align: left;
+}
+
+.intro-notes h2 {
+  margin: 0 0 8px;
+  color: var(--text-h);
+  font-size: 17px;
+}
+
+.intro-notes p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+  .intro-page .header {
+    padding-top: 4px;
+  }
+
+  .intro-page .header h1 {
+    font-size: 34px;
+  }
+
+  .intro-hero {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+
+  .intro-copy h2 {
+    font-size: 28px;
+  }
+
+  .intro-feature-list {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -1,15 +1,17 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.jsx'
+import App from './Home.jsx'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import About from './About/About.jsx'
 import BillOfRights from './Bill-Of-Rights/bill-of-rights.jsx'
-import AI from './AI/AI.jsx'
+import AI from './AI Display/AI.jsx'
 import ConstAmmend from './Constitutional Ammendments/ConstAmmend.jsx'
+import Intro from './Home/Intro.jsx'
 
 const router = createBrowserRouter([
-  {path: "/",element: <App />},
+  {path: "/",element: <Intro />},
+  {path: "/Home",element: <App />},
   {path: "/about",element: <About />},
   {path: "/bill-of-rights",element: <BillOfRights />},
   {path: "/AI",element: <AI />},
