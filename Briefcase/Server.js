@@ -37,10 +37,6 @@ app.post("/api/Ben-AI", async (req, res) => {
           role: "system",
           content: "You are a strict legal advisor. Answer the user's question using ONLY reference from the provided text below. If the answer cannot be found in the text, reply strictly with: 'I cannot answer this based on the provided documents.'"
         },
-        {
-          role: "user",
-          content: `Reference Law Documents:\n${referenceText}\n\nUser Question: ${userQuestion}`
-        }
       ],
     });
 
