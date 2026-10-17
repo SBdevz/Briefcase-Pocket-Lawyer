@@ -8,7 +8,7 @@ function App() {
     return(
         <>
             <Header />
-            <hr style={{ opacity: 0.3 }} />
+            <hr style={{ width: '80%', opacity: 0.3 }} />
             <br></br>
             <main>
                 <section aria-labelledby="home-title">

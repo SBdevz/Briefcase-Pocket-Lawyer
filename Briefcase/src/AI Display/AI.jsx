@@ -8,6 +8,9 @@ function AI() {
           Please enter your query below:
         </p>
       </div>
+      <div className="ai-input">
+        
+      </div>
     </div>
   );
 }
