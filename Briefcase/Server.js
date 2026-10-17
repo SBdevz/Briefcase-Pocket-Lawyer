@@ -11,28 +11,35 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-const grok = new OpenAI({
-  apiKey: process.env.XBEN_AI,
-  baseURL: "https://api.x.ai/v1",
+const groq = new OpenAI({
+  apiKey: process.env.GROQ_API_KEY,
+  baseURL: "https://api.groq.com/openai/v1",
 });
 
 app.post("/api/Ben-AI", async (req, res) => {
   try {
-    const { userQuestion } = req.body;
+    const { userQuestion, state } = req.body;
 
-    const filePath = path.join(process.cwd(), "documents", "legal-reference.txt");
-    const referenceText = fs.readFileSync(filePath, "utf-8");
+    const fileName = state ? `${state}.txt` : "National.txt";
+    const filePath = path.join(process.cwd(), "Legal_Database", fileName);
     
-    const completion = await grok.chat.completions.create({
-      model: "grok-2-latest",
+    let referenceText = "";
+    if (fs.existsSync(filePath)) {
+      referenceText = fs.readFileSync(filePath, "utf-8");
+    } else {
+      referenceText = fs.readFileSync(path.join(process.cwd(), "Legal_Database", "National.txt"), "utf-8");
+    }
+
+    const completion = await groq.chat.completions.create({
+      model: "llama-3.3-70b-versatile",
       messages: [
         {
           role: "system",
-          content: "You are a strict legal advisor. Answer the user's question using ONLY the provided reference text below. If the answer cannot be found in the text, reply strictly with: 'I cannot answer this based on the provided documents.'"
+          content: "You are a strict legal advisor. Answer the user's question using ONLY reference from the provided text below. If the answer cannot be found in the text, reply strictly with: 'I cannot answer this based on the provided documents.'"
         },
         {
           role: "user",
-          content: `Reference Documents:\n${referenceText}\n\nUser Question: ${userQuestion}`
+          content: `Reference Law Documents:\n${referenceText}\n\nUser Question: ${userQuestion}`
         }
       ],
     });
