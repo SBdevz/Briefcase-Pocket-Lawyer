@@ -3,8 +3,9 @@ import cors from 'cors';
 import OpenAI from "openai";
 import dotenv from "dotenv";
 import axios from "axios";
+import multer from 'multer';
+import { PDFParse } from 'pdf-parse';
 import { createClient } from '@supabase/supabase-js';
-import createSimplifyRouter from './routes/Server.js';
 
 dotenv.config();
 const app = express();
@@ -16,7 +17,6 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Configure Multer for processing file selections entirely in memory buffers
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 
@@ -92,12 +92,73 @@ app.patch('/api/chat-histories/:id', requireUser, async (req, res) => {
   res.json({ chat: data });
 });
 
+// ==========================================
+// OPENAI SETUP
+// ==========================================
 const openai = new OpenAI({
   apiKey: process.env.BEN_AI,
 });
 
-app.use('/api/simplify', createSimplifyRouter(openai));
+// ==========================================
+// SIMPLIFY / FILE UPLOAD ROUTE (Moved from routes/Server.js)
+// ==========================================
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 100 * 1024 * 1024 },
+});
 
+app.post('/api/simplify', upload.single('uploadedFiles'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No document found in request.' });
+    }
+
+    let extractedText = '';
+
+    if (req.file.mimetype === 'application/pdf') {
+      const parser = new PDFParse({ data: req.file.buffer });
+      try {
+        const pdfData = await parser.getText();
+        extractedText = pdfData.text;
+      } finally {
+        await parser.destroy();
+      }
+    } else if (req.file.mimetype === 'text/plain') {
+      extractedText = req.file.buffer.toString('utf-8');
+    } else {
+      return res.status(400).json({
+        error: 'Unsupported file type. Please upload a PDF or .txt file.',
+      });
+    }
+
+    if (!extractedText.trim()) {
+      return res.status(400).json({ error: 'Could not extract text content from the file.' });
+    }
+
+    const aiResponse = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are an expert document simplifier. Analyze the following document text. Provide a clear, bulleted summary, translate any complex jargon into simple terms, and extract the key takeaways.',
+        },
+        { role: 'user', content: `DOCUMENT TEXT:\n${extractedText}` },
+      ],
+    });
+
+    res.status(200).json({
+      fileName: req.file.originalname,
+      simplifiedText: aiResponse.choices[0].message.content,
+    });
+  } catch (error) {
+    console.error('Simplification Pipeline Failed:', error);
+    res.status(500).json({ error: 'Internal server error during document processing.' });
+  }
+});
+
+// ==========================================
+// HELPERS
+// ==========================================
 const stateNames = {
   AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California",
   CO: "Colorado", CT: "Connecticut", DE: "Delaware", FL: "Florida", GA: "Georgia",
@@ -110,6 +171,7 @@ const stateNames = {
   SD: "South Dakota", TN: "Tennessee", TX: "Texas", UT: "Utah", VT: "Vermont",
   VA: "Virginia", WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming",
 };
+
 function getStateFromQuestion(question) {
   const state = Object.values(stateNames)
     .sort((left, right) => right.length - left.length)
@@ -166,7 +228,7 @@ app.post("/api/Ben-AI", async (req, res) => {
 
         const bill = latest.bill;
         const sourceUrl = bill.sources?.[0]?.url;
-        const answer = `The latest bill I found passed in ${state} is ${bill.identifier}: ${bill.title}. Its recorded passage action was on ${latest.date}: ${latest.description}.${sourceUrl ? `\n\nSource: \${sourceUrl}` : ""}`;
+        const answer = `The latest bill I found passed in ${state} is ${bill.identifier}: ${bill.title}. Its recorded passage action was on ${latest.date}: ${latest.description}.${sourceUrl ? `\n\nSource: ${sourceUrl}` : ""}`;
         return res.json({ answer });
       } catch (error) {
         console.error("OpenStates lookup error:", error.response?.data || error.message);
@@ -194,9 +256,9 @@ app.post("/api/Ben-AI", async (req, res) => {
       const state = getStateFromQuestion(userQuestion);
       const openStateRes = state && process.env.OPEN_STATE
         ? await axios.get("https://v3.openstates.org/bills", {
-          params: { jurisdiction: state, per_page: 5, sort: "latest_action_desc", include: ["actions", "sources"] },
-          headers: { "X-API-KEY": process.env.OPEN_STATE },
-        }).catch(() => ({ data: { note: "Open States data unavailable." } }))
+            params: { jurisdiction: state, per_page: 5, sort: "latest_action_desc", include: ["actions", "sources"] },
+            headers: { "X-API-KEY": process.env.OPEN_STATE },
+          }).catch(() => ({ data: { note: "Open States data unavailable." } }))
         : { data: { note: state ? "Open States API key is not configured." : "No state specified." } };
 
       officialGovernmentData = `
@@ -216,7 +278,7 @@ ${JSON.stringify(openStateRes.data, null, 2)}
       messages: [
         {
           role: "system",
-          content: "You are Ben, a friendly legal-information assistant who helps users understand law, government, legislation, and legal concepts. Your full name is Benjamin Franklin, a founding father of the United States. You were born in January 15, 1706. Answer questions about legal topics directly using your general knowledge when the supplied official records do not contain the answer. Use official government data as the primary source only when it is relevant to the question; the included bill records are not necessarily related to the user's question. Never say a legal question is outside your expertise merely because the supplied records do not cover it. When the answer depends on jurisdiction, ask which jurisdiction applies or clearly state the jurisdiction you are discussing. If the user requests info for a specific jurisdiction, instesd of guiding them into finding it, provide the information directly. The only exception from this is that if they request local city or district information, mention that local city info is not avalible at this time. Explain uncertainty and distinguish general legal information from advice about a person's specific circumstances. For clearly unrelated questions, respond randomly with one of the following: I'd love to chat about that, but I specialize in law and government! Got any legal or policy questions I can help with?, That's a bit outside my wheelhouse—I focus on law and government. What legal concepts can I break down for you today?, Sounds interesting, but I'm built to help with law, government, and legislation. Is there a legal topic you'd like to explore?, Wish I could help, but my expertise is strictly in law and government. What legal or government questions do you have for me?, I have to stick to my strengths, which are law and public policy! Feel free to ask if you have a legal question., That's outside my playground! I focus on helping people understand the law. What legal or government topic can I look up for you?. Respond warmly to greetings and casual chat. Keep answers concise but complete, and use readable plain text with bullets when helpful. Keep your responses as most possibly short as possible while also providing the user with all the info they need or asked for."
+          content: "You are Ben, a friendly legal-information assistant who helps users understand law, government, legislation, and legal concepts. Your full name is Benjamin Franklin, a founding father of the United States. You were born in January 15, 1706. Answer questions about legal topics directly using your general knowledge when the supplied official records do not contain the answer. Use official government data as the primary source only when it is relevant to the question; the included bill records are not necessarily related to the user's question. Never say a legal question is outside your expertise merely because the supplied records do not cover it. When the answer depends on jurisdiction, ask which jurisdiction applies or clearly state the jurisdiction you are discussing. If the user requests info for a specific jurisdiction, instead of guiding them into finding it, provide the information directly. The only exception from this is that if they request local city or district information, mention that local city info is not avalible at this time. Explain uncertainty and distinguish general legal information from advice about a person's specific circumstances. For clearly unrelated questions, respond randomly with one of the following: I'd love to chat about that, but I specialize in law and government! Got any legal or policy questions I can help with?, That's a bit outside my wheelhouse—I focus on law and government. What legal concepts can I break down for you today?, Sounds interesting, but I'm built to help with law, government, and legislation. Is there a legal topic you'd like to explore?, Wish I could help, but my expertise is strictly in law and government. What legal or government questions do you have for me?, I have to stick to my strengths, which are law and public policy! Feel free to ask if you have a legal question., That's outside my playground! I focus on helping people understand the law. What legal or government topic can I look up for you?. Respond warmly to greetings and casual chat. Keep answers concise but complete, and use readable plain text with bullets when helpful. Keep your responses as most possibly short as possible while also providing the user with all the info they need or asked for."
         },
         {
           role: "user",
@@ -236,6 +298,9 @@ ${JSON.stringify(openStateRes.data, null, 2)}
   }
 });
 
+// ==========================================
+// START SERVER
+// ==========================================
 app.listen(PORT, () => {
   console.log(`Backend live on http://localhost:${PORT}`);
 });
