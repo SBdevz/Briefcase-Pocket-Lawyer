@@ -11,7 +11,7 @@ import Intro from './Home/Intro.jsx'
 import Demo from './Demo/Demo.jsx'
 import LoginPage from './Login/loginpage.jsx'
 import { AuthProvider } from './AuthContext.jsx';
-import DocuHelp from './Home/DocuHelp.jsx';
+import DocuHelp from './Documents/DocuHelp.jsx';
 
 const router = createBrowserRouter([
   {path: "/",element: <Intro />},

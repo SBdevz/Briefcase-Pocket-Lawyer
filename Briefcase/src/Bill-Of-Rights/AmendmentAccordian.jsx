@@ -10,7 +10,7 @@ function AMaccordian(){
         }
     }
     return(
-        <div className="AccordianWrapper">
+        <div className="AccordianWrapper constitution-accordion">
             <div className="Accordian">
                 {data.map((item, index) => (
                     <div key={index} className="AccordianItem">
@@ -21,14 +21,16 @@ function AMaccordian(){
                             aria-controls={`bill-amendment-${index}`}
                             onClick={() => toggle(index)}
                         >
-                            <h2>{item.Ammendment}</h2>
-                            <span aria-hidden="true">{selected === index ? '-' : '+'}</span>
+                            <span className="constitution-amendment-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                            <span className="constitution-amendment-title">{item.Ammendment}</span>
+                            <span className="constitution-amendment-toggle" aria-hidden="true">{selected === index ? '−' : '+'}</span>
                         </button>
                         <div id={`bill-amendment-${index}`} className={selected === index ? 'AccordianContent' : 'AccordianContent-hidden'}>
-                            <p>{item.Summary}</p>
-                            <br />
-                            <p>{item.Exact}</p>
-                            <br />
+                            <p className="constitution-amendment-summary">{item.Summary}</p>
+                            <div className="constitution-amendment-exact">
+                                <p className="constitution-amendment-exact-label">Constitutional text</p>
+                                <blockquote>{item.Exact}</blockquote>
+                            </div>
                         </div>
                     </div>
                 ))}
@@ -39,7 +41,7 @@ function AMaccordian(){
 
 const data = [
     {
-        Ammendment: "First Ammendment",
+        Ammendment: "First Amendment",
         Summary: "Protects your right to speak your mind, practice any religion (or none at all), write and publish news, gather peacefully in groups, and ask the government to fix problems.",
         Exact: "Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof; or abridging the freedom of speech, or of the press; or the right of the people peaceably to assemble, and to petition the Government for a redress of grievances."
     },

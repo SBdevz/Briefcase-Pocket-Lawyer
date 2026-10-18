@@ -18,6 +18,7 @@ function AI() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [benReply, setBenReply] = useState(null);
+  const [historyOpen, setHistoryOpen] = useState(false);
   
   // --- Sidebar & Sync States ---
   const [pastChats, setPastChats] = useState([]); 
@@ -169,74 +170,89 @@ function AI() {
     ? 'thinking'
     : benReply ? 'explaining' : 'neutral';
   const benImages = {
-    neutral: '/ben-neutral.gif',
-    thinking: '/ben-thinking.gif',
-    explaining: '/ben-explain.gif',
+    neutral: '/ben-neutral-cutout.png',
+    thinking: '/ben-thinking-cutout.png',
+    explaining: '/ben-explain-cutout.png',
   };
 
   return (
-    <div style={{ display: 'flex', width: '100vw', height: '100vh', overflow: 'hidden' }}>
+    <div className={`ai-shell${isLoggedIn ? ' has-history' : ''}`}>
       
       {/* 🧭 HISTORY SIDEBAR (Only mounts if logged in) */}
       {isLoggedIn && (
-        <aside style={{ width: '260px', background: '#171717', color: '#fff', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem', borderRight: '1px solid #2d2d2d' }}>
-          <button 
+        <aside id="ai-history" className={`ai-history${historyOpen ? ' is-open' : ''}`}>
+          <button
+            className="ai-new-chat"
             type="button"
-            onClick={() => { setCurrentChatId(null); setMessages([]); setBenReply(null); }} 
-            style={{ padding: '0.6rem', width: '100%', cursor: 'pointer', background: '#333', color: '#fff', border: 'none', borderRadius: '4px', fontWeight: 'bold' }}
+            onClick={() => { setCurrentChatId(null); setMessages([]); setBenReply(null); setHistoryOpen(false); }}
           >
             + New Chat
           </button>
-          <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.5rem' }}>
-            <p style={{ fontSize: '0.75rem', color: '#888', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Past Conversations</p>
+          <div className="ai-history-list">
+            <p className="ai-history-heading">Past Conversations</p>
             {pastChats.map(chat => (
               <button
                 key={chat.id}
                 type="button"
-                onClick={() => { setCurrentChatId(chat.id); setMessages(chat.messages); setBenReply(null); }}
-                style={{
-                  display: 'block', width: '100%', textAlign: 'left', padding: '0.6rem',
-                  background: currentChatId === chat.id ? '#262626' : 'transparent',
-                  color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer',
-                  whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '0.9rem'
-                }}
+                onClick={() => { setCurrentChatId(chat.id); setMessages(chat.messages); setBenReply(null); setHistoryOpen(false); }}
+                className={`ai-history-chat${currentChatId === chat.id ? ' is-active' : ''}`}
               >
-                💬 {chat.title}
+                {chat.title}
               </button>
             ))}
           </div>
         </aside>
       )}
+      {isLoggedIn && historyOpen && (
+        <button
+          className="ai-history-scrim"
+          type="button"
+          aria-label="Close chat history"
+          onClick={() => setHistoryOpen(false)}
+        />
+      )}
 
       {/* 💬 MAIN APPLICATION VIEW WINDOW */}
-      <main className="ai-page" style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100vh' }}>
+      <main className="ai-page">
         <header className="ai-header">
           <Link className="ai-brand" to="/Home" aria-label="Briefcase home">
             <span className="ai-brand-mark" aria-hidden="true">B</span>
-            <span>Briefcase <span className="ai-brand-light">/ Ben</span></span>
+            <span>Briefcase Pocket Lawyer <span className="ai-brand-light">/ Ben</span></span>
           </Link>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-            <span className="ai-status"><span aria-hidden="true" /> Government sources</span>
+          <div className="ai-header-actions">
             {isLoggedIn && (
-              <button 
+              <button
+                className="ai-history-toggle"
                 type="button"
-                onClick={handleSaveChat}
-                style={{ background: '#10a37f', color: '#fff', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 'bold' }}
+                aria-expanded={historyOpen}
+                aria-controls="ai-history"
+                onClick={() => setHistoryOpen((open) => !open)}
               >
-                💾 Save Chat
+                Chats
               </button>
             )}
+            <span className="ai-status"><span aria-hidden="true" /> Government sources</span>
+            {isLoggedIn && (
+              <button
+                className="ai-save-chat"
+                type="button"
+                onClick={handleSaveChat}
+              >
+                Save Chat
+              </button>
+            )}
+            {!isLoggedIn && <Link className="ai-account-link" to="/login">Log In / Sign Up</Link>}
           </div>
         </header>
 
-        <section className="ai-chat" aria-label="Chat with Ben" style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+        <section className="ai-chat" aria-label="Chat with Ben">
           <div className="ai-chat-heading">
             <p className="ai-kicker">YOUR POCKET RESEARCHER</p>
             <h1>Ask Ben</h1>
-            <p className="ai-intro">Questions about federal legislation? Start here.</p>
+            <p className="ai-intro">Seeking legal advisory? Start here.</p>
           </div>
 
-          <div className="ai-conversation" aria-live="polite" aria-relevant="additions" style={{ flex: 1, overflowY: 'auto' }}>
+          <div className="ai-conversation" aria-live="polite" aria-relevant="additions">
             {messages.length === 0 ? (
               <div className="ai-welcome">
                 <span className="ai-welcome-mark" aria-hidden="true">B</span>
@@ -255,7 +271,7 @@ function AI() {
               <div className="ai-message-list">
                 {messages.filter((message) => !benReply || message.id !== benReply.id).map((message, index) => (
                   <article className={`ai-message ai-message-${message.role}`} key={`${message.role}-${index}`}>
-                    <span className="ai-message-label">{message.role === 'user' ? 'YOU' : 'BEN'}</span>
+                    <span className="ai-message-label">{message.role === 'user' ? 'YOU' : 'BEN SAYS'}</span>
                     {message.role === 'assistant' ? (
                       <div className="ai-markdown">
                         <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -269,7 +285,7 @@ function AI() {
                 ))}
                 {isLoading && (
                   <div className="ai-message ai-message-assistant ai-typing" role="status">
-                    <span className="ai-message-label">BEN</span>
+                    <span className="ai-message-label">BEN SAYS</span>
                     <p>Checking the available records...</p>
                   </div>
                 )}
@@ -285,6 +301,7 @@ function AI() {
               alt={`Ben is ${benState === 'explaining' ? 'speaking' : benState}.`}
             />
             <div className="ai-ben-bubble" aria-label="Ben's response">
+              <span className="ai-ben-speaker-label">BEN SAYS</span>
               {isLoading ? (
                 <p className="ai-ben-thinking">Ben is checking the available records...</p>
               ) : benReply ? (

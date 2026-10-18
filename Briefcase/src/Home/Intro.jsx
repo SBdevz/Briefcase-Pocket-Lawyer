@@ -1,42 +1,69 @@
 import { Link } from 'react-router-dom';
-import Header from './Header.jsx';
 
 function Intro() {
     return (
-        <main className="intro-page">
-            <Header />
-            <section className="intro-hero" aria-labelledby="intro-title">
+        <main className="intro-page home-page home-newspaper">
+            <header className="intro-topbar">
+                <span className="intro-edition">A pocket guide to U.S. legal information</span>
+                <Link className="intro-top-login" to="/login">Log In / Sign Up <span aria-hidden="true">&rarr;</span></Link>
+            </header>
+
+            <section className="intro-hero intro-scrapbook-hero" aria-labelledby="intro-title">
+                <div className="intro-scrapbook" aria-hidden="true">
+                    <figure className="intro-scrap intro-scrap-founders">
+                        <img src="https://bri-wp-images.s3.amazonaws.com/wp-content/uploads/founding-fathers-550x271.png" alt="" />
+                        <figcaption>FOUNDING DOCUMENTS</figcaption>
+                    </figure>
+                    <figure className="intro-scrap intro-scrap-constitution">
+                        <img src="https://www.worldhistory.org/img/r/p/1500x1500/19151.jpg.webp?v=1769406258-1719391559" alt="" />
+                        <figcaption>THE CONSTITUTION</figcaption>
+                    </figure>
+                    <figure className="intro-scrap intro-scrap-capitol">
+                        <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9f/US_Capitol_east_side.JPG/960px-US_Capitol_east_side.JPG" alt="" />
+                        <figcaption>CAPITOL HILL · WIKIMEDIA COMMONS</figcaption>
+                    </figure>
+                    <figure className="intro-scrap intro-scrap-note">
+                        <span>Know your rights.<br />Know where to begin.</span>
+                        <figcaption>FIELD NOTE NO. 01</figcaption>
+                    </figure>
+                    <span className="intro-scrap-star intro-scrap-star-one">✳</span>
+                    <span className="intro-scrap-star intro-scrap-star-two">✳</span>
+                    <span className="intro-scrap-star intro-scrap-star-three">✦</span>
+                    <span className="intro-scrap-star intro-scrap-star-four">✦</span>
+                    <span className="intro-scrap-star intro-scrap-star-five">✳</span>
+                    <span className="intro-scrap-star intro-scrap-star-six">✳</span>
+                </div>
+
                 <div className="intro-copy">
-                    <p className="intro-eyebrow">A clearer place to start</p>
-                    <h2 id="intro-title">Legal information, made easier to find.</h2>
+                    <p className="intro-eyebrow"><span aria-hidden="true"></span> A clearer place to start</p>
+                    <h1 id="intro-title">Briefcase<br />Pocket Lawyer</h1>
                     <p className="intro-lead">
-                        Briefcase Pocket Lawyer brings useful U.S. legal resources and tools together in one straightforward place.
+                        U.S. legal information, constitutional resources, and practical tools, all in one approachable place.
                     </p>
                     <div className="intro-actions">
-                        <Link className="intro-cta" to="/Home">Preview as a guest <span aria-hidden="true">&rarr;</span></Link>
-                        <Link className="account-cta" to="/login">Log in or sign up</Link>
+                        <Link className="intro-cta" to="/Home">Explore the toolkit <span aria-hidden="true">&rarr;</span></Link>
                     </div>
+                    <p className="intro-subnote">Start browsing as a guest. No account needed.</p>
                 </div>
-                <figure className="intro-visual">
-                    <img
-                        src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg"
-                        alt="Flag of the United States"
-                    />
-                    <figcaption>Resources focused on the United States</figcaption>
-                </figure>
             </section>
 
             <section className="intro-features" aria-labelledby="features-title">
                 <div className="intro-section-heading">
-                    <p className="intro-eyebrow">What you can explore</p>
+                    <p className="intro-eyebrow"><span aria-hidden="true"></span> Inside the briefcase</p>
                     <h2 id="features-title">Start with the information you need.</h2>
                 </div>
-                <ul className="intro-feature-list">
-                    <li>Legal information and reference resources</li>
-                    <li>Guidance through common legal processes</li>
-                    <li>Tools for organizing cases and appointments</li>
-                    <li>AI-assisted legal information and document review</li>
-                </ul>
+                <div className="intro-feature-content">
+                    <ul className="intro-feature-list">
+                        <li>Legal information and reference resources</li>
+                        <li>Guidance through common legal processes</li>
+                        <li>Tools for organizing cases and appointments</li>
+                        <li>AI-assisted legal information and document review</li>
+                    </ul>
+                    <figure className="intro-features-ben">
+                        <img src="/ben-neutral-cutout.png" alt="Ben, the Briefcase Pocket Lawyer legal information guide" />
+                        <figcaption>Meet Ben, your pocket researcher</figcaption>
+                    </figure>
+                </div>
             </section>
 
             <aside className="intro-notes" aria-labelledby="notes-title">

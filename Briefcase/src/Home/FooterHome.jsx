@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 
 function FooterHome () {
     const [email, setEmail] = useState('');
-    const navigate = useNavigate();
 
     useEffect(() => {
         let isMounted = true;
@@ -26,17 +25,6 @@ function FooterHome () {
         };
     }, []);
 
-    const handleLogout = async (e) => {
-        e.preventDefault(); // Stop the <Link> from jumping paths before signout completes
-        const { error } = await supabase.auth.signOut();
-        
-        if (error) {
-            console.error('Error logging out:', error.message);
-        } else {
-            navigate('/'); 
-        }
-    };
-
     return (
         <>
         <footer className="footer">
@@ -46,7 +34,6 @@ function FooterHome () {
             <div>
                 <ul>
                     <p>You are currently logged in as: <span className="footer-username">{email}</span></p>
-                    <Link className="footer-logout" to="/" onClick={handleLogout}>Log Out</Link>
                 </ul>
             </div>
             <div className="container">
