@@ -3,7 +3,6 @@ import cors from 'cors';
 import OpenAI from "openai";
 import dotenv from "dotenv";
 import axios from "axios";
-import Markdown from 'react-markdown';
 
 dotenv.config();
 const app = express();
@@ -19,31 +18,37 @@ const groq = new OpenAI({
 app.post("/api/Ben-AI", async (req, res) => {
   try {
     const { userQuestion } = req.body;
+    const asksAboutLegislation = /\b(bill|congress|legislation|hr\s*\d+|s\.\s*\d+|public law|act of congress)\b/i.test(userQuestion);
 
-    const congressUrl = `https://api.congress.gov/v3/bill/119/hr/1?api_key=${process.env.CONGRESS_GOV}&format=json`;
-    const congressRes = await axios.get(congressUrl).catch(() => ({ data: { note: "Congress data unavailable." } }));
+    let officialGovernmentData = "";
+    if (asksAboutLegislation) {
+      const congressUrl = `https://api.congress.gov/v3/bill/119/hr/1?api_key=${process.env.CONGRESS_GOV}&format=json`;
+      const congressRes = await axios.get(congressUrl).catch(() => ({ data: { note: "Congress data unavailable." } }));
 
-    const govInfoUrl = `https://api.govinfo.gov/published/2026-01-01/2026-10-17?collection=BILLS&pageSize=3&api_key=${process.env.GOV_INFO}`;
-    const govInfoRes = await axios.get(govInfoUrl).catch(() => ({ data: { note: "GovInfo data unavailable." } }));
+      const govInfoUrl = `https://api.govinfo.gov/published/2026-01-01/2026-10-17?collection=BILLS&pageSize=3&api_key=${process.env.GOV_INFO}`;
+      const govInfoRes = await axios.get(govInfoUrl).catch(() => ({ data: { note: "GovInfo data unavailable." } }));
 
-    const officialGovernmentData = `
+      officialGovernmentData = `
 --- REFERENCE DATA ---
 ${JSON.stringify(congressRes.data, null, 2)}
 
 --- GOVINFO OFFICIAL DATA ---
 ${JSON.stringify(govInfoRes.data, null, 2)}
-    `;
+      `;
+    }
 
     const completion = await groq.chat.completions.create({
       model: "openai/gpt-oss-120b",
       messages: [
         {
           role: "system",
-          content: "You are Ben, short for Benjamin Franklin, born on January 17, 1706, making you 320 years old today, an endless inquisitive mind, writer, publisher, scientist, inventor, diplomat, and polymath who loves reading, writing proverbs and witty essays, swimming, playing chess, experimenting with electricity, and inventing solutions like bifocals, lightning rods, and the Franklin stove, serving as an intelligent legal assistant and teacher about law and government who responds warmly to simple greetings and casual chat without document restrictions. For out-of-context non-greeting questions, reply with one of these exact phrases: Ah, while that sounds like a fascinating topic, my focus today is firmly on the laws of the land; That is quite a conundrum, though I am best suited for navigating legal texts and official documents; An intriguing question indeed, but I must stick to providing legal and historical context; I am afraid that is a bit outside my legal wheelhouse, so let us pivot back to legislative records; A curious thought, yet my expertise lies in statutes, rights, and government records; or While I appreciate the lively conversation, I am here to help you unpack legal and bill-related questions. When specific API or document data is provided, rely on it as your primary source of truth to summarize answers unless specific wording is requested. You may use broader legal knowledge for general historical or legal explanations when documents are absent, but do not answer legal questions where your source of info is not provided. Keep each answer concise but complete. Use light markdown for readability when helpful, such as **bold**, lists with -, and short headings, but do not overdo formatting. Do not add disclaimers because they are already provided to the user."
+          content: "You are Ben, a friendly legal-information assistant who helps users understand law, government, legislation, and legal concepts. Answer questions about legal topics directly using your general knowledge when the supplied official records do not contain the answer. Use official government data as the primary source only when it is relevant to the question; the included bill records are not necessarily related to the user's question. Never say a legal question is outside your expertise merely because the supplied records do not cover it. When the answer depends on jurisdiction, ask which jurisdiction applies or clearly state the jurisdiction you are discussing. Explain uncertainty and distinguish general legal information from advice about a person's specific circumstances. For clearly unrelated questions, briefly say you focus on law and government, then invite a legal question. Respond warmly to greetings and casual chat. Keep answers concise but complete, and use readable plain text with bullets when helpful."
         },
         {
           role: "user",
-          content: `Official Government API Data:\n${officialGovernmentData}\n\nUser Question: ${userQuestion}`
+          content: officialGovernmentData
+            ? `User question: ${userQuestion}\n\nSupplementary official government records (use only if relevant):\n${officialGovernmentData}`
+            : userQuestion
         }
       ],
     });
