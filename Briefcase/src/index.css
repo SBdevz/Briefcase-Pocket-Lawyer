@@ -1563,6 +1563,17 @@ code {
   overflow-wrap: anywhere;
 }
 
+.ai-markdown[data-typing="true"]::after {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 3px;
+  background: currentColor;
+  content: "";
+  vertical-align: text-bottom;
+  animation: ai-caret 850ms steps(2, start) infinite;
+}
+
 .ai-markdown > :first-child {
   margin-top: 0;
 }
@@ -1728,6 +1739,12 @@ code {
 @keyframes ai-arrive {
   from { opacity: 0; transform: translateY(7px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ai-caret {
+  to {
+    visibility: hidden;
+  }
 }
 
 @media (max-width: 600px) {
