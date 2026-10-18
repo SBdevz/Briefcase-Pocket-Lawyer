@@ -17,6 +17,7 @@ function AI() {
   const [question, setQuestion] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [benReply, setBenReply] = useState(null);
   
   // --- Sidebar & Sync States ---
   const [pastChats, setPastChats] = useState([]); 
@@ -34,8 +35,24 @@ function AI() {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    conversationEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isLoading]);
+    if (!benReply) conversationEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isLoading, benReply]);
+
+  useEffect(() => {
+    if (!benReply || benReply.visibleText.length >= benReply.content.length) return;
+
+    const timer = window.setTimeout(() => {
+      setBenReply((current) => {
+        if (!current || current.id !== benReply.id) return current;
+        const revealStep = Math.max(2, Math.ceil(current.content.length / 200));
+        const nextLength = Math.min(current.visibleText.length + revealStep, current.content.length);
+        if (nextLength >= current.content.length) return null;
+        return { ...current, visibleText: current.content.slice(0, nextLength) };
+      });
+    }, 18);
+
+    return () => window.clearTimeout(timer);
+  }, [benReply]);
 
   // Downloads past conversations from your backend using the user's session token
   const fetchPastChats = async () => {
@@ -105,6 +122,7 @@ function AI() {
     const userQuestion = text.trim();
     if (!userQuestion || isLoading) return;
 
+    setBenReply(null);
     setMessages((current) => [...current, { role: 'user', content: userQuestion }]);
     setQuestion(''); setError(''); setIsLoading(true);
 
@@ -119,7 +137,15 @@ function AI() {
       if (!response.ok) {
         throw new Error(response.status >= 500 ? 'Ben could not process that question.' : data.error);
       }
-      setMessages((current) => [...current, { role: 'assistant', content: data.answer }]);
+      const reply = {
+        id: `ben-${Date.now()}`,
+        role: 'assistant',
+        content: typeof data.answer === 'string' && data.answer.trim()
+          ? data.answer
+          : "I couldn't generate a response to that question.",
+      };
+      setMessages((current) => [...current, reply]);
+      setBenReply({ ...reply, visibleText: '' });
     } catch (requestError) {
       setError(requestError.message);
     } finally {
@@ -138,6 +164,16 @@ function AI() {
       sendQuestion();
     }
   }
+
+  const benState = isLoading
+    ? 'thinking'
+    : benReply ? 'explaining' : 'neutral';
+  const benImages = {
+    neutral: '/ben-neutral.gif',
+    thinking: '/ben-thinking.gif',
+    explaining: '/ben-explain.gif',
+  };
+
   return (
     <div style={{ display: 'flex', width: '100vw', height: '100vh', overflow: 'hidden' }}>
       
@@ -146,7 +182,7 @@ function AI() {
         <aside style={{ width: '260px', background: '#171717', color: '#fff', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem', borderRight: '1px solid #2d2d2d' }}>
           <button 
             type="button"
-            onClick={() => { setCurrentChatId(null); setMessages([]); }} 
+            onClick={() => { setCurrentChatId(null); setMessages([]); setBenReply(null); }} 
             style={{ padding: '0.6rem', width: '100%', cursor: 'pointer', background: '#333', color: '#fff', border: 'none', borderRadius: '4px', fontWeight: 'bold' }}
           >
             + New Chat
@@ -157,7 +193,7 @@ function AI() {
               <button
                 key={chat.id}
                 type="button"
-                onClick={() => { setCurrentChatId(chat.id); setMessages(chat.messages); }}
+                onClick={() => { setCurrentChatId(chat.id); setMessages(chat.messages); setBenReply(null); }}
                 style={{
                   display: 'block', width: '100%', textAlign: 'left', padding: '0.6rem',
                   background: currentChatId === chat.id ? '#262626' : 'transparent',
@@ -217,7 +253,7 @@ function AI() {
               </div>
             ) : (
               <div className="ai-message-list">
-                {messages.map((message, index) => (
+                {messages.filter((message) => !benReply || message.id !== benReply.id).map((message, index) => (
                   <article className={`ai-message ai-message-${message.role}`} key={`${message.role}-${index}`}>
                     <span className="ai-message-label">{message.role === 'user' ? 'YOU' : 'BEN'}</span>
                     {message.role === 'assistant' ? (
@@ -240,6 +276,27 @@ function AI() {
                 <div ref={conversationEndRef} />
               </div>
             )}
+          </div>
+
+          <div className={`ai-ben-stage ai-ben-stage-${benState}`}>
+            <img
+              className="ai-ben-portrait"
+              src={benImages[benState]}
+              alt={`Ben is ${benState === 'explaining' ? 'speaking' : benState}.`}
+            />
+            <div className="ai-ben-bubble" aria-label="Ben's response">
+              {isLoading ? (
+                <p className="ai-ben-thinking">Ben is checking the available records...</p>
+              ) : benReply ? (
+                <div className="ai-markdown">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {benReply.visibleText || '\u00a0'}
+                  </ReactMarkdown>
+                </div>
+              ) : (
+                <p className="ai-ben-thinking">Ready when you are.</p>
+              )}
+            </div>
           </div>
 
           {error && <p className="ai-error" role="alert">{error}</p>}
