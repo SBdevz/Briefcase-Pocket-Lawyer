@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 
 function LoginPage() {
   const navigate = useNavigate();
-  const [isSignUp, setIsSignUp] = useState(false); // Toggles between Login and Signup modes
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isSignUp = searchParams.get('mode') === 'signup';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -26,7 +27,7 @@ function LoginPage() {
           navigate('/Home');
         } else {
           setStatusMessage('Account created. Check your email to confirm your address, then sign in.');
-          setIsSignUp(false);
+          setSearchParams({});
         }
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -83,7 +84,7 @@ function LoginPage() {
         <button 
           className="login-switch-button"
           type="button"
-          onClick={() => setIsSignUp(!isSignUp)}
+          onClick={() => setSearchParams(isSignUp ? {} : { mode: 'signup' })}
         >
           {isSignUp ? 'Log In' : 'Sign Up'}
         </button>

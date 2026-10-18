@@ -3,6 +3,7 @@
     "@supabase/supabase-js": "^2.118.0",
     "dotenv": "^18.0.8",
     "openai": "^7.36.0",
-    "react-router-dom": "^7.18.3"
+    "react-router-dom": "^7.18.3",
+    "remark-gfm": "^4.0.1"
   }
 }

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { Link } from 'react-router-dom';
 
 const suggestedQuestions = [
@@ -106,7 +107,11 @@ function AI() {
                 <article className={`ai-message ai-message-${message.role}`} key={`${message.role}-${index}`}>
                   <span className="ai-message-label">{message.role === 'user' ? 'YOU' : 'BEN'}</span>
                   {message.role === 'assistant' ? (
-                    <div className="ai-markdown"><ReactMarkdown>{message.content}</ReactMarkdown></div>
+                    <div className="ai-markdown">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {message.content.replace(/<br\s*\/?>/gi, '\n')}
+                      </ReactMarkdown>
+                    </div>
                   ) : (
                     <p>{message.content}</p>
                   )}

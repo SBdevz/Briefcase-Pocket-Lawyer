@@ -10,6 +10,7 @@ import ConstAmmend from './Constitutional Ammendments/ConstAmmend.jsx'
 import Intro from './Home/Intro.jsx'
 import Demo from './Demo/Demo.jsx'
 import LoginPage from './Login/loginpage.jsx'
+import { AuthProvider } from './AuthContext.jsx';
 
 const router = createBrowserRouter([
   {path: "/",element: <Intro />},
@@ -24,6 +25,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  </StrictMode>
 )
