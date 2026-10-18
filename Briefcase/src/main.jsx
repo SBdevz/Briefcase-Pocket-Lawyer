@@ -11,6 +11,7 @@ import Intro from './Home/Intro.jsx'
 import Demo from './Demo/Demo.jsx'
 import LoginPage from './Login/loginpage.jsx'
 import { AuthProvider } from './AuthContext.jsx';
+import DocuHelp from './Home/DocuHelp.jsx';
 
 const router = createBrowserRouter([
   {path: "/",element: <Intro />},
@@ -20,7 +21,8 @@ const router = createBrowserRouter([
   {path: "/AI",element: <AI />},
   {path: "/constitutional-amendments",element: <ConstAmmend />},
   {path: "/demo",element: <Demo />},
-  {path: "/login",element: <LoginPage />}
+  {path: "/login",element: <LoginPage />},
+  {path: "/docuhelp",element: <DocuHelp />}
 ]);
 
 createRoot(document.getElementById('root')).render(

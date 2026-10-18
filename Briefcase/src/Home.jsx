@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from './Home/Footer.jsx';
 import Header from './Home/Header.jsx';
@@ -5,10 +6,13 @@ import BORcard from './Home/BORcard.jsx';
 import AIcard from './Home/AIcard.jsx';
 import ConstAmmend from './Home/ConstAmmendCard.jsx';
 import FooterHome from './Home/FooterHome.jsx';
-import { useAuth } from './AuthContext'; // Imports the global auth tracker variable
+import { useAuth } from './AuthContext';
+import DocuHelp from './Home/DocuHelp.jsx';
 
 function App() {
     const { isLoggedIn } = useAuth(); 
+    // State hook tracking whether the popup modal overlay is active
+    const [showDocuHelp, setShowDocuHelp] = useState(false);
 
     if (isLoggedIn === true) {
         return (
@@ -50,6 +54,19 @@ function App() {
                             <BORcard />
                             <AIcard />
                             <ConstAmmend />
+                            
+                            {/* Clickable Card Trigger Button configured to match other toolkit cards */}
+                            <div 
+                                onClick={() => setShowDocuHelp(true)}
+                                className="home-resource-card"
+                                style={{ cursor: "pointer", transition: "transform 0.2s" }}
+                            >
+                                <div style={{ fontSize: "32px", marginBottom: "12px" }}>✨</div>
+                                <h3 style={{ fontSize: "18px", margin: "0 0 8px 0", fontWeight: "600" }}>Document Simplifier</h3>
+                                <p style={{ fontSize: "14px", color: "#666", margin: 0 }}>
+                                    Upload heavy legal documents or PDFs to get plain English translations.
+                                </p>
+                            </div>
                         </div>
                     </section>
 
@@ -60,10 +77,69 @@ function App() {
                     </aside>
                 </main>
                 <FooterHome />
+
+                {/* MODAL LIGHTBOX OVERLAY WRAPPER */}
+                {showDocuHelp && (
+                    <div 
+                        onClick={() => setShowDocuHelp(false)} // Clicking backdrop dims closes modal
+                        style={{
+                            position: "fixed",
+                            top: 0,
+                            left: 0,
+                            width: "100vw",
+                            height: "100vh",
+                            backgroundColor: "rgba(0, 0, 0, 0.5)",
+                            backdropFilter: "blur(4px)",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            zIndex: 1000,
+                            padding: "20px"
+                        }}
+                    >
+                        {/* Interactive Modal Dashboard Body container */}
+                        <div 
+                            onClick={(e) => e.stopPropagation()} // Prevents inner element clicks from triggering parent backdrop close
+                            style={{
+                                backgroundColor: "#ffffff",
+                                width: "100%",
+                                maxWidth: "900px",
+                                maxHeight: "90vh",
+                                borderRadius: "16px",
+                                overflowY: "auto",
+                                padding: "30px",
+                                position: "relative",
+                                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+                            }}
+                        >
+                            {/* Close Trigger Button Header Element */}
+                            <button
+                                type="button"
+                                onClick={() => setShowDocuHelp(false)}
+                                style={{
+                                    position: "absolute",
+                                    top: "20px",
+                                    right: "25px",
+                                    background: "none",
+                                    border: "none",
+                                    fontSize: "24px",
+                                    cursor: "pointer",
+                                    color: "#9ca3af",
+                                    fontWeight: "300"
+                                }}
+                                title="Close Window"
+                            >
+                                ✕
+                            </button>
+
+                            {/* Mounts your full drag-and-drop tool inside the modal framing context */}
+                            <DocuHelp />
+                        </div>
+                    </div>
+                )}
             </div>
         );
     }
-
     else {
         return (
             <div className="home-page">
@@ -133,4 +209,5 @@ function App() {
 }
 
 export default App;
+
 

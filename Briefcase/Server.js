@@ -4,6 +4,7 @@ import OpenAI from "openai";
 import dotenv from "dotenv";
 import axios from "axios";
 import { createClient } from '@supabase/supabase-js';
+import createSimplifyRouter from './routes/Server.js';
 
 dotenv.config();
 const app = express();
@@ -15,12 +16,16 @@ app.use(cors({
 }));
 app.use(express.json());
 
-const supabaseUrl = process.env.SUPABASE_URL || "https://supabase.co";
+// Configure Multer for processing file selections entirely in memory buffers
+const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 
 async function requireUser(req, res, next) {
-  const token = req.get('authorization')?.match(/^Bearer\s+(.+)$/i)?.[1];
+  const token = req.get('authorization')?.match(/^Bearer\s+(\S+)$/i)?.[1];
   if (!token) return res.status(401).json({ error: 'Authentication required.' });
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return res.status(500).json({ error: 'Supabase server credentials are not configured.' });
+  }
 
   try {
     const userSupabase = createClient(supabaseUrl, supabaseAnonKey, {
@@ -38,6 +43,9 @@ async function requireUser(req, res, next) {
   }
 }
 
+// ==========================================
+// CHAT HISTORIES ROUTES
+// ==========================================
 app.get('/api/chat-histories', requireUser, async (req, res) => {
   const { data, error } = await req.userSupabase
     .from('chat_histories')
@@ -88,6 +96,8 @@ const openai = new OpenAI({
   apiKey: process.env.BEN_AI,
 });
 
+app.use('/api/simplify', createSimplifyRouter(openai));
+
 const stateNames = {
   AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California",
   CO: "Colorado", CT: "Connecticut", DE: "Delaware", FL: "Florida", GA: "Georgia",
@@ -100,7 +110,6 @@ const stateNames = {
   SD: "South Dakota", TN: "Tennessee", TX: "Texas", UT: "Utah", VT: "Vermont",
   VA: "Virginia", WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming",
 };
-
 function getStateFromQuestion(question) {
   const state = Object.values(stateNames)
     .sort((left, right) => right.length - left.length)
@@ -121,6 +130,9 @@ function getPassageActions(bill) {
     .map((action) => ({ ...action, bill }));
 }
 
+// ==========================================
+// BEN-AI LEGISLATIVE ROUTE
+// ==========================================
 app.post("/api/Ben-AI", async (req, res) => {
   try {
     const { userQuestion } = req.body;
@@ -154,7 +166,7 @@ app.post("/api/Ben-AI", async (req, res) => {
 
         const bill = latest.bill;
         const sourceUrl = bill.sources?.[0]?.url;
-        const answer = `The latest bill I found passed in ${state} is ${bill.identifier}: ${bill.title}. Its recorded passage action was on ${latest.date}: ${latest.description}.${sourceUrl ? `\n\nSource: ${sourceUrl}` : ""}`;
+        const answer = `The latest bill I found passed in ${state} is ${bill.identifier}: ${bill.title}. Its recorded passage action was on ${latest.date}: ${latest.description}.${sourceUrl ? `\n\nSource: \${sourceUrl}` : ""}`;
         return res.json({ answer });
       } catch (error) {
         console.error("OpenStates lookup error:", error.response?.data || error.message);
