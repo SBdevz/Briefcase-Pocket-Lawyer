@@ -4129,9 +4129,9 @@ body:has(.ai-shell) {
   display: inline-flex;
   align-items: center;
   gap: 18px;
-  color: var(--blue-ink);
-  background: var(--paper-light);
-  box-shadow: 2px 2px 0 rgba(23, 74, 110, 0.14);
+  color: var(--paper-light);
+  background: var(--blue-ink);
+  box-shadow: 2px 2px 0 rgba(23, 74, 110, 0.24);
 }
 
 .intro-page .account-cta {
@@ -4491,8 +4491,8 @@ body:has(.ai-shell) {
   gap: 12px;
   padding: 0 11px;
   border: 1px solid var(--blue-ink);
-  color: var(--blue-ink);
-  background: var(--paper-light);
+  color: var(--paper-light);
+  background: var(--blue-ink);
   font-size: 10px;
   font-weight: 750;
   text-decoration: none;
@@ -4501,7 +4501,7 @@ body:has(.ai-shell) {
 
 .intro-top-login:hover {
   color: var(--paper-light);
-  background: var(--blue-ink);
+  background: #103a57;
 }
 
 .intro-top-login:focus-visible {
@@ -4730,6 +4730,10 @@ body:has(.ai-shell) {
   min-height: 48px;
   padding-inline: 18px;
   font-size: 14px;
+}
+
+.intro-page .intro-cta:hover {
+  background: #103a57;
 }
 
 .intro-subnote {

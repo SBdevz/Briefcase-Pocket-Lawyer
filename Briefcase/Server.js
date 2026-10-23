@@ -111,6 +111,7 @@ app.post('/api/simplify', (req, res, next) => {
   if (!openai) return res.status(503).json({ error: 'Document AI is not configured. Set BEN_AI on the backend.' });
 
   let documentText;
+  let processingStage = 'reading the document';
   const isPdf = req.file.mimetype === 'application/pdf' || req.file.originalname.toLowerCase().endsWith('.pdf');
   const isText = req.file.mimetype === 'text/plain' || req.file.originalname.toLowerCase().endsWith('.txt');
 
@@ -132,6 +133,7 @@ app.post('/api/simplify', (req, res, next) => {
     documentText = documentText?.trim();
     if (!documentText) return res.status(422).json({ error: 'No readable text was found in this document.' });
 
+    processingStage = 'requesting the AI explanation';
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages: [
@@ -148,7 +150,21 @@ app.post('/api/simplify', (req, res, next) => {
     return res.json({ simplifiedText });
   } catch (error) {
     console.error('Document simplification error:', error);
-    return res.status(500).json({ error: 'Unable to simplify this document. Check the backend logs and try again.' });
+    if (processingStage === 'reading the document') {
+      return res.status(422).json({ error: 'Could not read this document. For PDFs, make sure it contains selectable text and is not damaged or password-protected.' });
+    }
+
+    const upstreamStatus = Number(error.status);
+    if (upstreamStatus === 401 || upstreamStatus === 403) {
+      return res.status(503).json({ error: 'The AI service rejected the backend credentials. Check the BEN_AI environment variable.' });
+    }
+    if (upstreamStatus === 429) {
+      return res.status(503).json({ error: 'The AI service is rate-limited or out of quota. Check the AI account and try again later.' });
+    }
+    if (upstreamStatus >= 500 && upstreamStatus <= 599) {
+      return res.status(502).json({ error: 'The AI service is temporarily unavailable. Please try again later.' });
+    }
+    return res.status(502).json({ error: 'The AI request failed. Check that BEN_AI is configured on the deployed backend and review its function logs.' });
   }
 });
 
