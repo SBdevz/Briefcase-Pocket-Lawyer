@@ -133,10 +133,10 @@ function AI() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userQuestion }),
       });
-      const data = await response.json();
+      const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(response.status >= 500 ? 'Ben could not process that question.' : data.error);
+        throw new Error(data.error || 'Ben could not process that question. Please try again later.');
       }
       const reply = {
         id: `ben-${Date.now()}`,
