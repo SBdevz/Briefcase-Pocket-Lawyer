@@ -11,8 +11,8 @@ export default function DocuHelp() {
   const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef(null);
 
-  // 100MB File Ceiling
-  const MAX_SIZE_MB = 100;
+  // Keep uploads below Vercel's serverless request size limit.
+  const MAX_SIZE_MB = 4;
 
   // Converts file bytes into a clean, human-readable format
   const formatFileSize = (bytes) => {

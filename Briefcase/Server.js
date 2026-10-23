@@ -17,6 +17,10 @@ app.use(cors({
 }));
 app.use(express.json());
 
+app.get('/api/health', (_req, res) => {
+  res.json({ status: 'ok', aiConfigured: Boolean(process.env.BEN_AI) });
+});
+
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 
@@ -95,13 +99,13 @@ const openai = process.env.BEN_AI
 
 const documentUpload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 100 * 1024 * 1024, files: 1 },
+  limits: { fileSize: 4 * 1024 * 1024, files: 1 },
 });
 
 app.post('/api/simplify', (req, res, next) => {
   documentUpload.single('uploadedFiles')(req, res, (error) => {
     if (error) {
-      const status = error instanceof multer.MulterError ? 400 : 500;
+      const status = error.code === 'LIMIT_FILE_SIZE' ? 413 : error instanceof multer.MulterError ? 400 : 500;
       return res.status(status).json({ error: error.message || 'Unable to receive the uploaded document.' });
     }
     next();
@@ -204,10 +208,13 @@ function getPassageActions(bill) {
 app.post("/api/Ben-AI", async (req, res) => {
   try {
     if (!openai) {
-      return res.status(503).json({ error: 'Ben AI is not configured on the server.' });
+      return res.status(503).json({ error: 'Ben AI is not configured on this deployment. Add BEN_AI in Vercel Project Settings > Environment Variables, then redeploy.' });
     }
 
     const { userQuestion } = req.body;
+    if (typeof userQuestion !== 'string' || !userQuestion.trim()) {
+      return res.status(400).json({ error: 'Enter a question for Ben.' });
+    }
     const asksAboutLegislation = /\b(bill|congress|legislation|hr\s*\d+|s\.\s*\d+|public law|act of congress)\b/i.test(userQuestion);
     const asksForLatestPassedBill = /\b(latest|most recent|newest|last)\b[\s\(\S\)]{0,60}\b(bill|legislation)\b[\s\(\S\)]{0,60}\b(pass(?:ed|age))\b|\b(pass(?:ed|age))\b[\s\(\S\)]{0,60}\b(latest|most recent|newest|last)\b[\s\(\S\)]{0,60}\b(bill|legislation)\b/i.test(userQuestion);
 
@@ -303,8 +310,18 @@ ${JSON.stringify(openStateRes.data, null, 2)}
     res.json({ answer: aiAnswer });
 
   } catch (error) {
-    console.error("Backend Runtime Error:", error);
-    res.status(500).json({ error: "Processing Error" });
+    console.error("Ben AI request failed:", { status: error.status, message: error.message });
+    const upstreamStatus = Number(error.status);
+    if (upstreamStatus === 401 || upstreamStatus === 403) {
+      return res.status(503).json({ error: 'The AI service rejected BEN_AI. Verify the key in Vercel Environment Variables, then redeploy.' });
+    }
+    if (upstreamStatus === 429) {
+      return res.status(503).json({ error: 'The AI service is rate-limited or out of quota. Check the AI account and try again later.' });
+    }
+    if (upstreamStatus >= 500 && upstreamStatus <= 599) {
+      return res.status(502).json({ error: 'The AI service is temporarily unavailable. Please try again later.' });
+    }
+    return res.status(502).json({ error: 'Ben could not reach the AI service. Check the Vercel function logs for details.' });
   }
 });
 
