@@ -304,7 +304,7 @@ code {
 
 .home-art-note-top {
   top: 25px;
-  right: 4%;
+  right: 9%;
 }
 
 .home-art-note-bottom {
@@ -2039,7 +2039,7 @@ body:has(.home-newspaper) {
   background-image: radial-gradient(rgba(23, 74, 110, 0.2) 0.6px, transparent 0.6px);
   background-size: 9px 9px;
   box-shadow: 5px 6px 0 rgba(23, 74, 110, 0.13);
-  transform: rotate(0.7deg);
+  transform: translateX(-4px) rotate(0.7deg);
 }
 
 .home-newspaper .home-hero-art::before {
