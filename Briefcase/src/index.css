@@ -1984,7 +1984,6 @@ body:has(.home-newspaper) {
   padding-top: 48px;
   padding-bottom: 48px;
   border-bottom: 2px solid var(--ink);
-  background-image: linear-gradient(90deg, transparent 0 66%, rgba(219, 234, 240, 0.38) 66% 100%);
   animation: home-print-in 480ms ease-out both;
 }
 
@@ -4052,9 +4051,9 @@ body:has(.ai-shell) {
   display: inline-flex;
   align-items: center;
   gap: 18px;
-  color: var(--paper-light);
-  background: var(--blue-ink);
-  box-shadow: 3px 3px 0 #9db8c1;
+  color: var(--blue-ink);
+  background: var(--paper-light);
+  box-shadow: 2px 2px 0 rgba(23, 74, 110, 0.14);
 }
 
 .intro-page .account-cta {
