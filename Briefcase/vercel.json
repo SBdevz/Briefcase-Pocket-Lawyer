@@ -1,7 +1,35 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/Home",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/bill-of-rights",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/AI",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/constitutional-amendments",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/demo",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/login",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/docuhelp",
       "destination": "/index.html"
     }
   ]
