@@ -1,4 +1,6 @@
 import React, { useState, useRef } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { Link } from "react-router-dom";
 import Header from "../Home/Header.jsx";
 
@@ -192,7 +194,9 @@ export default function DocuHelp() {
             <section className="document-help-result" aria-labelledby="document-result-title">
               <p className="home-eyebrow">Your document, clarified</p>
               <h2 id="document-result-title">Simplified Breakdown</h2>
-              <pre>{simplifiedResult}</pre>
+              <div className="document-help-markdown">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{simplifiedResult}</ReactMarkdown>
+              </div>
             </section>
           )}
         </section>

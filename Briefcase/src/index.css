@@ -3624,7 +3624,7 @@ body:has(.ai-shell) {
   margin-bottom: 6px;
 }
 
-.document-help-result pre {
+.document-help-markdown {
   margin: 16px 0 0;
   padding: 20px;
   border: 1px solid #d5cebb;
@@ -3634,7 +3634,85 @@ body:has(.ai-shell) {
   font-size: 14px;
   line-height: 1.75;
   overflow-wrap: anywhere;
-  white-space: pre-wrap;
+}
+
+.document-help-markdown > :first-child {
+  margin-top: 0;
+}
+
+.document-help-markdown > :last-child {
+  margin-bottom: 0;
+}
+
+.document-help-markdown h1,
+.document-help-markdown h2,
+.document-help-markdown h3 {
+  margin: 1.2em 0 0.45em;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+.document-help-markdown p,
+.document-help-markdown ul,
+.document-help-markdown ol,
+.document-help-markdown blockquote,
+.document-help-markdown pre {
+  margin: 0 0 0.8em;
+}
+
+.document-help-markdown ul,
+.document-help-markdown ol {
+  padding-left: 1.5rem;
+}
+
+.document-help-markdown blockquote {
+  padding-left: 14px;
+  border-left: 3px solid var(--blue-ink);
+  color: var(--muted-ink);
+}
+
+.document-help-markdown a {
+  color: var(--blue-ink);
+  text-decoration: underline;
+}
+
+.document-help-markdown code {
+  padding: 2px 4px;
+  background: rgba(38, 55, 63, 0.08);
+  font-family: Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.document-help-markdown pre {
+  padding: 12px;
+  overflow-x: auto;
+  background: rgba(38, 55, 63, 0.08);
+}
+
+.document-help-markdown pre code {
+  padding: 0;
+  background: transparent;
+}
+
+.document-help-markdown table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.document-help-markdown th,
+.document-help-markdown td {
+  min-width: 100px;
+  padding: 7px 9px;
+  border: 1px solid #b9b3a1;
+  text-align: left;
+  vertical-align: top;
+}
+
+.document-help-markdown th {
+  color: #fff;
+  background: var(--blue-ink);
 }
 
 .document-help-disclaimer {
