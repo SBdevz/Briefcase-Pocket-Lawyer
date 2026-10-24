@@ -4,6 +4,4 @@ export const config = {
   api: { bodyParser: false },
 };
 
-export default function handler(request, response) {
-  return app(request, response);
-}
+export default app;
