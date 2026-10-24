@@ -53,6 +53,7 @@ export default async function handler(request, response) {
   try {
     if (isPdf) {
       const { PDFParse } = await import('pdf-parse');
+      PDFParse.setWorker(import.meta.resolve('pdfjs-dist/legacy/build/pdf.worker.mjs'));
       const parser = new PDFParse({ data: request.file.buffer });
       try {
         const parsed = await parser.getText();
