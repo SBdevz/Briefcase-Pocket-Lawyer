@@ -1,6 +1,10 @@
 import multer from 'multer';
 import OpenAI from 'openai';
-import { PDFParse } from 'pdf-parse';
+import { DOMMatrix, ImageData, Path2D } from '@napi-rs/canvas';
+
+globalThis.DOMMatrix ??= DOMMatrix;
+globalThis.ImageData ??= ImageData;
+globalThis.Path2D ??= Path2D;
 
 export const config = {
   api: { bodyParser: false },
@@ -48,6 +52,7 @@ export default async function handler(request, response) {
   let documentText;
   try {
     if (isPdf) {
+      const { PDFParse } = await import('pdf-parse');
       const parser = new PDFParse({ data: request.file.buffer });
       try {
         const parsed = await parser.getText();
