@@ -42,7 +42,11 @@ export default async function handler(request, response) {
 
     return response.status(200).json({ answer });
   } catch (error) {
+    const errorName = typeof error.name === 'string' ? error.name : 'Error';
+    const errorCode = typeof error.code === 'string' ? error.code : undefined;
     console.error('Ben AI request failed:', {
+      name: errorName,
+      code: errorCode,
       status: error.status,
       message: error.message,
       requestId: error.request_id,
@@ -58,6 +62,10 @@ export default async function handler(request, response) {
     if (upstreamStatus >= 500 && upstreamStatus <= 599) {
       return response.status(502).json({ error: 'The AI service is temporarily unavailable. Please try again later.' });
     }
-    return response.status(502).json({ error: 'Ben could not reach the hosted AI service. Check the Vercel function logs for details.' });
+    if (!Number.isFinite(upstreamStatus)) {
+      const detail = errorCode || errorName;
+      return response.status(502).json({ error: `Vercel could not connect to the hosted AI service (${detail}). Check the BEN_AI value and Vercel function logs.` });
+    }
+    return response.status(502).json({ error: `The hosted AI service rejected Ben's request (HTTP ${upstreamStatus}). Check the model and Vercel function logs.` });
   }
 }
