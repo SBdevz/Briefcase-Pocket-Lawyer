@@ -1,8 +1,8 @@
-# Briefcase Pocket Lawyer
+# Briefcase Pocket Lawyer 💼
 
-This project serves as a pocket lawyer which people in the U.S. can use for legal queries and information.<br>
+An app designed for your everyday legal questions and complications! <br>
 </br>
-<img width = '4423' height = '2630' alt = 'Image of Home Screen' src = ''/>
+<img width="1896" height="837" alt="Image" src="https://github.com/user-attachments/assets/5ba48f0f-7107-4e97-af03-7c718d684df6" />
 
 -------------------------------------------------------------------------------------------------------------------------------<br>
 <br>
