@@ -19,6 +19,15 @@ Demo Video:
     - To learn more, navigate to the <a href="https://briefcase-woad.vercel.app/about">About Page</a><br>
 
   </ol>
+  <br>
+
+## Why Briefcase?
+  <ol>
+    - Briefcase is an easy-to-use and easy-to-navigate app for anyone <br>
+    - Unlike many AI chatbots involving legal information, Briefcase's Ben AI uses GOVERNMENT-ONLY official sources like Congress.gov. This ensures the user receives factual information that cannot harm or negatively impact them. <br>
+
+  </ol>
+
 
 <br/>
 
@@ -31,43 +40,33 @@ Demo Video:
 <br/>
 
 ## Tools/Features
-Currently, the app consists of four main tools:
 <ol>
 - <a href="https://briefcase-woad.vercel.app/AI">Ben AI</a>: Our to-go AI chatbot for any legal questions or advice<br>
-  - <a href="https://briefcase-woad.vercel.app/AI">Ben AI</a>: Our to-go AI chatbot for any legal questions or advice<br>
-- Optionally, create an account <br>
-- Navigate to the Toolkit page by clicking the button <br>
+- <a href="https://briefcase-woad.vercel.app/docuhelp">Document Help</a>: Ask questions or get assitance on any legal document<br>
+- <a href="https://briefcase-woad.vercel.app/bill-of-rights">Bill of Rigts</a>: Learn more about the first ten ammendments to the Constituiton <br>
+- <a href="https://briefcase-woad.vercel.app/constitutional-ammendments">Constitutional Ammendments</a>: Learn about more ammendments to the Constitution <br>
 </ol>
 <br/>
-## Processes
-  <ol>
-    <li>First, we installed the libraries of Node and React, along with Vite and other minor libraries</li>
-    <li>We then developed the frontend framework and some simple frontend functions to create our homepage</li>
-    <li>While brainstorming, we added multiple features, such as the Login and Intro pages, in which the Login page required backend development</li>
-    <li>We then set up a database in Supabase</li>
-    <li>We set up APIs on different providers including some by government resources to maintain quality</li>
-    <li>We finished wiring the backend including the chat saving feature</li>
-    <li>We styled everything using CSS</li>
-    <li>Finally, we created our README and shipped</li>
-  </ol>
 
-  <br/>
-
-### Additional Features
-These are simple extra features made for convenience and user satisfaction:
-  <ol>
-    <li>The user may login to save their chat history when using out AI chatbot</li>
-    <li>The user may also use guest mode for simple use, and log out whenever</li>
-    <li>Of course, the user may also sign up for an account by using their email which will then result in a message being sent to them for confirmation</li>
-  </ol>
-
- <br/> 
-
-### AI Usage
+## AI Usage
  AI was used  for the project in the following ways: <br>
+ <ol>
  - OpenAI API for BEN AI chatbot<br>
  - GitHub Copilot for Styling Assistance<br>
  - GitHub Copilot for Debugging<br>
  - Canva AI for Graphics<br>
+</ol>
+<br/> 
+
+ ## Credits/Libraries
+ <ol>
+ -React Libraries <br>
+ -Node Libraries <br>
+ -Supabase for Datastore <br>
+ -Congress.gov and GovInfo.gov APIs for AI knowledge base <br>
+ </ol>
  
+ <br>
+ <br>
+ DISCLAIMER: Briefcase or Ben AI should not be used to replace a real lawyer's knowledge. Ben AI is not a lawyer and should not be treated as one. Information may be atered by the AI unintentionally.
 
