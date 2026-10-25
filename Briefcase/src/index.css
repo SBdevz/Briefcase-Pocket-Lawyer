@@ -4079,6 +4079,89 @@ body:has(.ai-shell) {
   background: var(--ai-blue-wash);
 }
 
+/* ---- DocuHelp mobile (iPhone portrait) ---- */
+@media (max-width: 640px) {
+  .document-help-shell .document-help-main {
+    padding: 20px 16px 40px;
+  }
+
+  .document-help-shell > .header {
+    padding: 14px 16px;
+  }
+
+  .document-help-shell > .header h1 {
+    font-size: 30px;
+  }
+
+  .document-help-shell > .header h4 {
+    font-size: 13px;
+  }
+
+  .document-help-shell .document-help-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  /* Shrink the big intro heading so it fits the screen */
+  .document-help-shell .document-help-intro {
+    padding: 24px 0 20px;
+  }
+
+  .document-help-shell .document-help-intro h1 {
+    font-size: 34px;
+    line-height: 1.05;
+  }
+
+  .document-help-shell .document-help-intro > p:last-child {
+    font-size: 14px;
+  }
+
+  /* Stack the "Start with a document" heading and PDF/TXT badge */
+  .document-help-shell .document-help-tool {
+    padding-top: 22px;
+  }
+
+  .document-help-shell .document-help-tool-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .document-help-shell .document-help-tool-heading h2,
+  .document-help-shell .document-help-followup h2 {
+    font-size: 22px;
+  }
+
+  /* Tame the tall dropzone */
+  .document-help-shell .document-help-dropzone {
+    min-height: 190px;
+    gap: 8px;
+    padding: 22px 14px;
+  }
+
+  .document-help-shell .document-help-file-mark {
+    width: 46px;
+    height: 56px;
+    font-size: 10px;
+  }
+
+  .document-help-shell .document-help-drop-title {
+    font-size: 18px;
+  }
+
+  .document-help-shell .document-help-selected-file {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+  }
+
+  /* Let the bubbles use the full width on small screens */
+  .document-help-shell .document-help-result-message,
+  .document-help-shell .document-help-qa-pair .ai-message {
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 640px) {
   .document-help-main {
     padding-top: 20px;
@@ -5266,26 +5349,9 @@ body:has(.ai-shell) {
     min-height: 70px;
   }
 
-  .intro-scrap-star-one {
-    top: 142px;
-    left: 1.5%;
-  }
-
-  .intro-scrap-star-two {
-    right: 5%;
-    bottom: 135px;
-  }
-
-  .intro-scrap-star-three {
-    left: 3%;
-  }
-
-  .intro-scrap-star-four {
-    right: 3%;
-  }
-
-  .intro-scrap-star-five {
-    left: 38%;
+  /* Hide the decorative sparkle stars on small phones — they clutter the collage */
+  .intro-scrap-star {
+    display: none;
   }
 }
 
