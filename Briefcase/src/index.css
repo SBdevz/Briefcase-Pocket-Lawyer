@@ -5325,28 +5325,59 @@ body:has(.ai-shell) {
     font-size: 12px;
   }
 
+  /* On small phones, shrink the scraps and pin them to the far corners so the
+     centered hero text stays clear and nothing overlaps. */
+  .intro-scrap {
+    opacity: 0.9;
+  }
+
   .intro-scrap-founders {
-    left: 4%;
-    width: 126px;
-    height: 80px;
+    top: 8px;
+    left: 4px;
+    width: 118px;
+    height: 76px;
+    transform: rotate(-5deg);
   }
 
   .intro-scrap-constitution {
-    right: 10%;
-    width: 68px;
-    height: 94px;
+    top: 8px;
+    right: 4px;
+    width: 78px;
+    height: 100px;
+    transform: rotate(5deg);
+  }
+
+  .intro-scrap-constitution figcaption {
+    font-size: 6px;
+    letter-spacing: 0.3px;
   }
 
   .intro-scrap-capitol {
-    left: 6.5%;
-    width: 76px;
-    height: 58px;
+    top: auto;
+    bottom: 10px;
+    left: 4px;
+    width: 108px;
+    height: 76px;
+    transform: rotate(4deg);
+  }
+
+  .intro-scrap-capitol figcaption {
+    font-size: 5px;
+    letter-spacing: 0.1px;
   }
 
   .intro-scrap-note {
-    right: 2%;
-    width: 126px;
-    min-height: 70px;
+    top: auto;
+    bottom: 10px;
+    right: 4px;
+    width: 118px;
+    min-height: 66px;
+    padding: 10px 8px 5px;
+    transform: rotate(-4deg);
+  }
+
+  .intro-scrap-note > span {
+    font-size: 11px;
   }
 
   /* Hide the decorative sparkle stars on small phones — they clutter the collage */
