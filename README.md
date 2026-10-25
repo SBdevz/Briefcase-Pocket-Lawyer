@@ -1,44 +1,44 @@
 # Briefcase Pocket Lawyer 💼
-
-An app designed for your everyday legal questions and complications! <br>
+                                          
+An app designed for your everyday legal questions and complications! Our AI advises you on any legal situation and helps you learn your rights as a United States citizen! <br>
 </br>
-<img width="1896" height="837" alt="Image" src="https://github.com/user-attachments/assets/5ba48f0f-7107-4e97-af03-7c718d684df6" />
-
--------------------------------------------------------------------------------------------------------------------------------<br>
+URL: https://briefcase-woad.vercel.app/ 
+<br>  
+Demo Video:
 <br>
-## Members Involved
--Sarthak Baral
--Aryansh Arora
+<br>
+<img width="822" height="363" alt="Image" src="https://github.com/user-attachments/assets/5ba48f0f-7107-4e97-af03-7c718d684df6" />
 
-<br/>
+---------------------------------------------------------------------------------------------------------------------------------------<br>
+<br>
 
-## Purposes
+## Purpose
   <ol>
-    <li>This project was created solely to provide legal advice and assistance</li>
-    <li>It is not meant to be used as a substitute for a real lawyer or liable to any false, outdated, or missing info it provides</li>
-    <li>To learn more, navigate to <a src = 'About.jsx'>About.jsx</a></li>
+    - This app was developed to provide legal advice to people going through a legal struggle/situation <br>
+    - This app was also created for people to learn more about their rights or legislation passed by their Government<br>
+    - To learn more, navigate to the <a href="https://briefcase-woad.vercel.app/about">About Page</a><br>
+
   </ol>
 
 <br/>
 
-## Key Features
-  <ul>
-    <li>Contains a simplified and exact version of the first 10 amendments (Bill of Rights)</li>
-    <li>Contains data to help understand amendments 10-27, excluding #18</li>
-    <li>Contains an AI designed to only get information from official government sources and talk only about legal topics</li>
-    <li>Contains a place to input important documents to be simplified by our AI while keeping important details</li>
-  </ul>
-
+## Getting Started
+<ol>
+- Open the URL: https://briefcase-woad.vercel.app on your browser <br>
+- Optionally, create an account <br>
+- Navigate to the Toolkit page by clicking the button <br>
+</ol>
 <br/>
 
-## Main Libraries Used
-  <ul>
-    <li>react was used for the frontend</li>
-    <li>Node was used for backend development</li>
-  </ul>
-
+## Tools/Features
+Currently, the app consists of four main tools:
+<ol>
+- <a href="https://briefcase-woad.vercel.app/AI">Ben AI</a>: Our to-go AI chatbot for any legal questions or advice<br>
+  - <a href="https://briefcase-woad.vercel.app/AI">Ben AI</a>: Our to-go AI chatbot for any legal questions or advice<br>
+- Optionally, create an account <br>
+- Navigate to the Toolkit page by clicking the button <br>
+</ol>
 <br/>
-
 ## Processes
   <ol>
     <li>First, we installed the libraries of Node and React, along with Vite and other minor libraries</li>
@@ -63,6 +63,11 @@ These are simple extra features made for convenience and user satisfaction:
 
  <br/> 
 
-### AI Disclaimer
-  AI was employed in the development of this project in multiple aspects, such as front and back-end debugging, website styling, and was also used to create the animations seen
+### AI Usage
+ AI was used  for the project in the following ways: <br>
+ - OpenAI API for BEN AI chatbot<br>
+ - GitHub Copilot for Styling Assistance<br>
+ - GitHub Copilot for Debugging<br>
+ - Canva AI for Graphics<br>
+ 
 
