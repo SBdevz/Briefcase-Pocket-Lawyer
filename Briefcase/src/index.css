@@ -3715,6 +3715,81 @@ body:has(.ai-shell) {
   background: var(--blue-ink);
 }
 
+.document-help-markdown strong,
+.document-help-markdown b {
+  font-weight: 700;
+}
+
+.document-help-markdown li {
+  margin-bottom: 0.35em;
+}
+
+.document-help-followup {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid #d5cebb;
+}
+
+.document-help-followup .home-eyebrow {
+  margin-bottom: 6px;
+}
+
+.document-help-followup-intro {
+  margin: 0 0 16px;
+  color: var(--muted-ink);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.document-help-followup-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.document-help-followup-input {
+  flex: 1;
+  min-height: 52px;
+  max-height: 160px;
+  padding: 11px 13px;
+  border: 1px solid #b9b3a1;
+  color: var(--ink);
+  background: rgba(255, 253, 245, 0.82);
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.document-help-followup-input:focus {
+  border-color: var(--blue-ink);
+  outline: 2px solid rgba(23, 74, 110, 0.25);
+}
+
+.document-help-followup-submit {
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid var(--blue-ink);
+  color: var(--paper-light);
+  background: var(--blue-ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.document-help-followup-submit:disabled {
+  border-color: #92999a;
+  background: #92999a;
+  cursor: not-allowed;
+}
+
+.document-help-followup-error {
+  margin: 0 0 12px;
+  color: #8f2d2d;
+  font-size: 12px;
+}
+
 .document-help-disclaimer {
   display: flex;
   flex-wrap: wrap;
@@ -3732,6 +3807,276 @@ body:has(.ai-shell) {
 .document-help-footer {
   padding: 18px clamp(24px, 6vw, 76px);
   border-top: 1px solid #b6b09e;
+}
+
+/* ============================================================
+   DocuHelp in the Ben "ai-shell" blue theme
+   Reuses .ai-page / .ai-message / .ai-markdown / .ai-composer,
+   with overrides for the docuhelp-specific layout pieces.
+   ============================================================ */
+/* .ai-shell is display:flex (row) for Ben's sidebar layout; stack vertically here
+   so the header sits on top and the content column centers below it. */
+.document-help-shell {
+  flex-direction: column;
+  align-items: center;
+  /* Blue theme vars so the header (outside .ai-page) can use them */
+  --ai-purple: #174a6e;
+  --ai-blue-wash: #dbeaf0;
+  --ai-muted: #4e5d63;
+}
+
+.document-help-shell > .header {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px clamp(24px, 6vw, 76px);
+  border-bottom: 4px double var(--ai-ink);
+  background: rgba(255, 253, 245, 0.76);
+}
+
+.document-help-shell > .header .header-brand {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.document-help-shell > .header h1 {
+  margin: 0;
+  color: #080a0b;
+  font-family: 'Grenze Gotisch', 'Old English Text MT', 'Engravers Old English', Georgia, serif;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+.document-help-shell > .header h4 {
+  margin: 0;
+  color: var(--ai-purple);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.document-help-shell > .header .header-account-link,
+.document-help-shell > .header .header-logout {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  border: 1px solid var(--ai-purple);
+  color: var(--ai-paper);
+  background: var(--ai-purple);
+  box-shadow: 3px 3px 0 #9db8c1;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.document-help-shell .document-help-main {
+  width: min(100%, 900px);
+  min-height: auto;
+  margin: 0 auto;
+  padding: 30px clamp(24px, 5vw, 36px) 54px;
+  box-sizing: border-box;
+  align-self: center;
+}
+
+.document-help-shell .document-help-nav,
+.document-help-shell .document-help-footer {
+  color: var(--ai-muted);
+}
+
+.document-help-shell .document-help-nav {
+  border-bottom-color: var(--ai-line);
+}
+
+.document-help-shell .document-help-nav a,
+.document-help-shell .document-help-footer a {
+  color: var(--ai-purple);
+}
+
+.document-help-shell .document-help-intro {
+  border-bottom: 1px solid var(--ai-line);
+}
+
+.document-help-shell .document-help-intro h1,
+.document-help-shell .document-help-tool-heading h2,
+.document-help-shell .document-help-followup h2 {
+  color: var(--ai-ink);
+}
+
+.document-help-shell .document-help-intro > p:last-child,
+.document-help-shell .document-help-followup-intro {
+  color: var(--ai-muted);
+}
+
+.document-help-shell .document-help-step {
+  border-color: var(--ai-purple);
+  color: var(--ai-purple);
+  background: var(--ai-blue-wash);
+}
+
+.document-help-shell .document-help-dropzone {
+  border-color: #7b9bab;
+  color: var(--ai-ink);
+  background-color: var(--ai-panel);
+  background-image: radial-gradient(rgba(23, 74, 110, 0.16) 0.65px, transparent 0.65px);
+}
+
+.document-help-shell .document-help-dropzone:hover,
+.document-help-shell .document-help-dropzone.is-active {
+  border-color: var(--ai-purple);
+  background-color: var(--ai-blue-wash);
+}
+
+.document-help-shell .document-help-file-types {
+  color: var(--ai-muted);
+}
+
+.document-help-shell .document-help-file-mark,
+.document-help-shell .document-help-select-button,
+.document-help-shell .document-help-submit,
+.document-help-shell .document-help-followup-submit {
+  border-color: var(--ai-purple);
+  color: var(--ai-paper);
+  background: var(--ai-purple);
+}
+
+.document-help-shell .document-help-file-mark {
+  color: var(--ai-purple);
+  background: var(--ai-panel);
+}
+
+.document-help-shell .document-help-selected-file {
+  border-color: var(--ai-line);
+  border-left-color: var(--ai-purple);
+  background: var(--ai-panel);
+}
+
+.document-help-shell .document-help-file-tag {
+  color: var(--ai-purple);
+  background: var(--ai-blue-wash);
+}
+
+.document-help-shell .document-help-file-name strong {
+  color: var(--ai-ink);
+}
+
+.document-help-shell .document-help-file-name > span {
+  color: var(--ai-muted);
+}
+
+.document-help-shell .document-help-remove {
+  border-color: var(--ai-line);
+  color: var(--ai-red);
+}
+
+.document-help-shell .document-help-thinking,
+.document-help-shell .document-help-result-list,
+.document-help-shell .document-help-qa-list {
+  width: 100%;
+  max-width: none;
+  margin: 24px auto 0;
+}
+
+.document-help-shell .document-help-result {
+  margin-top: 8px;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* Match Ben: assistant bubbles cap at 88% so text wraps like his page */
+.document-help-shell .document-help-result-message,
+.document-help-shell .document-help-qa-pair .ai-message {
+  max-width: 88%;
+}
+
+/* Keep AI markdown headings compact like Ben's responses —
+   override the big global h1/h2 Georgia rules inside the bubbles. */
+.document-help-shell .ai-markdown h1,
+.document-help-shell .ai-markdown h2,
+.document-help-shell .ai-markdown h3,
+.document-help-shell .ai-markdown h4 {
+  margin: 1em 0 0.5em;
+  color: var(--ai-ink);
+  font-family: inherit;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.document-help-shell .ai-markdown h1 { font-size: 17px; }
+.document-help-shell .ai-markdown h2 { font-size: 15px; }
+.document-help-shell .ai-markdown h3 { font-size: 14px; }
+.document-help-shell .ai-markdown h4 { font-size: 14px; }
+
+.document-help-shell .ai-markdown h1:first-child,
+.document-help-shell .ai-markdown h2:first-child,
+.document-help-shell .ai-markdown h3:first-child {
+  margin-top: 0;
+}
+
+.document-help-shell .document-help-qa-list {
+  display: grid;
+  gap: 18px;
+  margin: 0 0 18px;
+}
+
+.document-help-shell .document-help-qa-pair {
+  display: grid;
+  gap: 18px;
+}
+
+.document-help-shell .document-help-followup {
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid var(--ai-line);
+}
+
+.document-help-shell .document-help-followup h2 {
+  margin: 0 0 8px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.document-help-shell .document-help-followup-form {
+  margin-top: 18px;
+}
+
+.document-help-shell .document-help-followup-input {
+  border: 0;
+  padding: 0;
+  color: var(--ai-ink);
+  background: transparent;
+}
+
+.document-help-shell .document-help-followup-input:focus {
+  outline: 0;
+}
+
+.document-help-shell .document-help-followup-submit {
+  border-radius: 2px;
+  font-size: 22px;
+}
+
+.document-help-shell .document-help-followup-error {
+  color: var(--ai-red);
+}
+
+.document-help-shell .document-help-disclaimer {
+  border-color: #a9bbc0;
+  border-left-color: var(--ai-purple);
+  color: var(--ai-ink);
+  background: var(--ai-blue-wash);
 }
 
 @media (max-width: 640px) {
@@ -3779,6 +4124,15 @@ body:has(.ai-shell) {
 
   .document-help-result pre {
     padding: 14px;
+  }
+
+  .document-help-followup-form {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .document-help-followup-submit {
+    width: 100%;
   }
 }
 

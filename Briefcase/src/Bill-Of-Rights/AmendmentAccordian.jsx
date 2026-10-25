@@ -1,15 +1,43 @@
 import { useState } from "react";
 
-function AMaccordian(){
+function AMaccordian() {
     const [selected, setSelected] = useState(null);
+    const [aiSummaries, setAiSummaries] = useState({});
+    const [loadingIndex, setLoadingIndex] = useState(null);
+
     const toggle = (index) => {
         if (selected === index) {
             return setSelected(null);
-        }else {
+        } else {
             setSelected(index);
         }
-    }
-    return(
+    };
+
+    const handleGenerateSummary = async (item, index) => {
+        setLoadingIndex(index);
+        try {
+            const response = await fetch('/api/Ben-AI', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userQuestion: `Provide a clear, concise 2-sentence plain-language summary of the ${item.Ammendment} based on this exact text: "${item.Exact}"`
+                })
+            });
+            
+            const data = await response.json();
+            if (response.ok) {
+                setAiSummaries(prev => ({ ...prev, [index]: data.answer }));
+            } else {
+                setAiSummaries(prev => ({ ...prev, [index]: data.error || 'Failed to generate summary.' }));
+            }
+        } catch (err) {
+            setAiSummaries(prev => ({ ...prev, [index]: 'Network error connecting to Ben.' }));
+        } finally {
+            setLoadingIndex(null);
+        }
+    };
+
+    return (
         <div className="AccordianWrapper constitution-accordion">
             <div className="Accordian">
                 {data.map((item, index) => (
@@ -21,12 +49,72 @@ function AMaccordian(){
                             aria-controls={`bill-amendment-${index}`}
                             onClick={() => toggle(index)}
                         >
-                            <span className="constitution-amendment-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                            <span className="constitution-amendment-number" aria-hidden="true">
+                                {String(index + 1).padStart(2, '0')}
+                            </span>
                             <span className="constitution-amendment-title">{item.Ammendment}</span>
-                            <span className="constitution-amendment-toggle" aria-hidden="true">{selected === index ? '−' : '+'}</span>
+                            <span className="constitution-amendment-toggle" aria-hidden="true">
+                                {selected === index ? '−' : '+'}
+                            </span>
                         </button>
+                        
                         <div id={`bill-amendment-${index}`} className={selected === index ? 'AccordianContent' : 'AccordianContent-hidden'}>
                             <p className="constitution-amendment-summary">{item.Summary}</p>
+                            
+                            {/* AI Summary Section matching newspaper theme */}
+                            <div className="ai-summary-section" style={{ margin: '1.25rem 0' }}>
+                                <button
+                                    type="button"
+                                    onClick={() => handleGenerateSummary(item, index)}
+                                    disabled={loadingIndex === index}
+                                    style={{
+                                        padding: '7px 14px',
+                                        fontSize: '0.85rem',
+                                        fontFamily: '"Cinzel", "Georgia", serif',
+                                        fontWeight: '600',
+                                        letterSpacing: '0.04em',
+                                        textTransform: 'uppercase',
+                                        cursor: loadingIndex === index ? 'wait' : 'pointer',
+                                        backgroundColor: '#fbf9f4',
+                                        color: '#1b2a3a',
+                                        border: '1px solid #1b2a3a',
+                                        borderRadius: '2px',
+                                        transition: 'all 0.2s ease'
+                                    }}
+                                >
+                                    {loadingIndex === index ? 'Ben is analyzing...' : '✦ Ask Ben for AI Summary'}
+                                </button>
+
+                                {aiSummaries[index] && (
+                                    <div 
+                                        style={{ 
+                                            marginTop: '12px', 
+                                            padding: '14px 16px', 
+                                            backgroundColor: '#EBF8FF', 
+                                            borderLeft: '3px solid #1b2a3a',
+                                            borderRadius: '20px',
+                                            boxShadow: 'inset 0 0 2px rgba(0,0,0,0.02)'
+                                        }}
+                                    >
+                                        <p 
+                                            style={{ 
+                                                margin: '0 0 4px 0', 
+                                                fontSize: '0.75rem', 
+                                                fontWeight: 'bold', 
+                                                letterSpacing: '0.06em', 
+                                                textTransform: 'uppercase',
+                                                color: '#606F7B' 
+                                            }}
+                                        >
+                                            Ben's Summary
+                                        </p>
+                                        <p style={{ margin: 0, fontSize: '0.95rem', lineHeight: '1.5', color: '#2b2b2b' }}>
+                                            {aiSummaries[index]}
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+
                             <div className="constitution-amendment-exact">
                                 <p className="constitution-amendment-exact-label">Constitutional text</p>
                                 <blockquote>{item.Exact}</blockquote>
@@ -36,7 +124,7 @@ function AMaccordian(){
                 ))}
             </div>
         </div>
-    )
+    );
 }
 
 const data = [
@@ -89,8 +177,7 @@ const data = [
         Ammendment: "Tenth Amendment",
         Summary: "Protects the rights reserved to the states or the people.",
         Exact: "The powers not delegated to the United States by the Constitution, nor prohibited by it to the States, are reserved to the States respectively, or to the people."
-    },
-    
+    }
 ];
 
-export default AMaccordian
+export default AMaccordian;
