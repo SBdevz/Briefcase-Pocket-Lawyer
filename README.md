@@ -1,6 +1,6 @@
 # Briefcase Pocket Lawyer 💼
                                           
-An app designed for your everyday legal questions and complications! Our AI advises you on any legal situation and helps you learn your rights as a United States citizen! <br>
+An app designed for your everyday legal questions and complications! Our AI gives you information for any legal situation and helps you learn your rights as a United States citizen! <br>
 </br>
 URL: https://briefcase-woad.vercel.app/ 
 <br>  
@@ -14,7 +14,7 @@ Demo Video:
 
 ## Purpose
   <ol>
-    - This app was developed to provide legal advice to people going through a legal struggle/situation <br>
+    - This app was developed to provide legal information to people going through a legal struggle/situation <br>
     - This app was also created for people to learn more about their rights or legislation passed by their Government<br>
     - To learn more, navigate to the <a href="https://briefcase-woad.vercel.app/about">About Page</a><br>
 
@@ -68,5 +68,5 @@ Demo Video:
  
  <br>
  <br>
- DISCLAIMER: Briefcase or Ben AI should not be used to replace a real lawyer's knowledge. Ben AI is not a lawyer and should not be treated as one. Information may be atered by the AI unintentionally.
+ DISCLAIMER: Briefcase and BEN are educational tools. Ben AI is not a lawyer and should not be treated as one. Information may be atered by the AI unintentionally.
 
