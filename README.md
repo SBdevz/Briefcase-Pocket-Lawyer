@@ -4,7 +4,7 @@ An app designed for your everyday legal questions and complications! Our AI give
 </br>
 URL: https://briefcase-woad.vercel.app/ 
 <br>  
-Demo Video:
+Demo Video: https://youtu.be/7k24n12Ex_E
 <br>
 <br>
 <img width="822" height="363" alt="Image" src="https://github.com/user-attachments/assets/5ba48f0f-7107-4e97-af03-7c718d684df6" />
